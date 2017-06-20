@@ -11,12 +11,7 @@
 #include <mraa/gpio.h>
 #include <mraa.h>
 
-sig_atomic_t volatile run_flag = 1;
-
-void do_when_interrupted(int sig) {
-  if (sig == SIGINT)
-  run_flag = 0;
-}
+static volatile int restart = 1;
 
 void error(const char *msg)
 {
@@ -24,19 +19,20 @@ void error(const char *msg)
   exit(0);
 }
 
+void intHandler() {
+    restart = 0;
+}
+
 int main(int argc, char *argv[])
 {
   
+  int client_socket_fd, portno, n;
+  struct sockaddr_in serv_addr;
+  struct hostent *server;
   
-  int restart = 1;
+  signal(SIGINT, intHandler);
   
-  while (restart) {
-    int client_socket_fd, portno, n;
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
-    char buffer[256];
-    
-    // Read command line arguments, need to get the host IP address and port
+  // Read command line arguments, need to get the host IP address and port
     if (argc < 3) {
       fprintf(stderr,"usage %s hostname port\n", argv[0]);
       exit(0);
@@ -70,7 +66,10 @@ int main(int argc, char *argv[])
     if (connect(client_socket_fd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){
       error("ERROR connecting");
     }
+  
+  while (restart) {
     
+    char buffer[256];
     
     /*
     *
@@ -171,7 +170,6 @@ int main(int argc, char *argv[])
     
     if (strstr(buffer, "NO") == NULL) {  //if the buffer contains no then password was wrong
       restart = 0;
-      close(client_socket_fd);
     }
     else {
       printf("restarting\n");
@@ -179,6 +177,6 @@ int main(int argc, char *argv[])
   }
   
   // clean up the file descriptors
-  
+  close(client_socket_fd);
   return 0;
 }
