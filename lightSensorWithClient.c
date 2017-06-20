@@ -119,9 +119,13 @@ int main(int argc, char *argv[])
 		* DONE SENDING PASSWORD
 		*
 		*/
+	
+		char array[20];
+	memcpy(array, password, 4);
+	array[4] = '\0';
 		char msgTxt[28];
 		strcpy(msgTxt, "ID = Group7 Password = ");
-		strcat(msgTxt, password);
+		strcat(msgTxt, array);
 		strcat(msgTxt, "\n");
 		printf("msg txt = %s", msgTxt);
 
