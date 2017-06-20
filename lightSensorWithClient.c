@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 		*/
 	
 		char array[129];
-	memcpy(array, password, 4);
+	memcpy(array, password, i+1);
 	array[4] = '\0';
 		char msgTxt[28];
 		strcpy(msgTxt, "ID = Group7 Password = ");
