@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
    int j;
    char password [3];
    for (j= 0; j<4; j++) {
-     if (values[j] > 150) {
+     if (values[j] > 200) {
        password[j] = '1';
      }
      else {
@@ -119,9 +119,10 @@ int main(int argc, char *argv[])
 		* DONE SENDING PASSWORD
 		*
 		*/
-		char msgTxt[27];
+		char msgTxt[28];
 		strcpy(msgTxt, "ID = Group7 Password = ");
 		strcat(msgTxt, password);
+		strcat(msgTxt, "\n");
 		printf("msg txt = %s", msgTxt);
 
 	// send user input to the server
