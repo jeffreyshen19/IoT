@@ -108,14 +108,11 @@ int main(int argc, char *argv[])
        password[j] = '0';
   	 }
    }
-	printf("made it this far");
+	printf("made it this far\n");
 
-		int x;
-		for (x = 0; x < 4; x++) {
-			printf("%c", password[x]);
-		}
+		
 
-		printf(" : that was the value stored in buffer\n");
+		printf("%s : that is password\n", password);
    r = mraa_aio_close(adc_a0);
 
 	 /*
