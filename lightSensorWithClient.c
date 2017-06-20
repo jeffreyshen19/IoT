@@ -130,10 +130,13 @@ int main(int argc, char *argv[])
       }
     }
     
+    printf("5\n");
     
     
     r = mraa_aio_close(adc_a0);
     
+    
+    printf("6\n");
     /*
     *
     * DONE SENDING PASSWORD
@@ -149,6 +152,7 @@ int main(int argc, char *argv[])
     //strcat(msgTxt, "\n");
     printf("msg txt = %s", msgTxt);
     
+    printf("7\n");
     // send user input to the server
     
     n = write(client_socket_fd,msgTxt,strlen(msgTxt));
@@ -157,6 +161,7 @@ int main(int argc, char *argv[])
     if (n < 0) {
       error("ERROR writing to socket");
     }
+    printf("8\n");
     
     // clear out the buffer
     memset(buffer, 0, 256);
@@ -166,6 +171,7 @@ int main(int argc, char *argv[])
     if (n < 0) {
       error("ERROR reading from socket");
     }
+    printf("9\n");
     printf("%s\n",buffer);
     
     if (strstr(buffer, "NO") == NULL) {  //if the buffer contains no then password was wrong
