@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
 
    int j;
    char password [4];
+	printf("%s : that is password\n", password);
    for (j= 0; j<4; j++) {
      if (values[j] > 150) {
        password[j] = '1';
@@ -107,8 +108,8 @@ int main(int argc, char *argv[])
      else {
        password[j] = '0';
   	 }
+	printf("%s : that is password\n", password);
    }
-	printf("made it this far\n");
 
 		
 
