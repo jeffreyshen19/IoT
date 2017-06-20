@@ -108,10 +108,11 @@ int main(int argc, char *argv[])
        buffer[j] = 0;
   	 }
    }
+	printf("made it this far");
 
 		int x;
 		for (x = 0; x < 4; x++) {
-			printf("%s", buffer[x]);
+			printf("%c", buffer[x]);
 		}
 
 		printf(" : that was the value stored in buffer\n");
