@@ -19,9 +19,20 @@ void error(const char *msg){
 }
 
 int main(int argc, char *argv[]){
-  
+  int numberIncorrect = 0;
   while (restart) {
-    
+    if (numberIncorrect > 7) {
+      printf("More than 7 incorrect guesses: 10 minute wait");
+      sleep(600);
+    }
+    else if (numberIncorrect > 5) {
+      printf("More than 5 incorrect guesses: 5 minute wait");
+      sleep(300);
+    }
+    else if (numberIncorrect > 3) {
+      printf("More than 3 incorrect guesses: 1 minutes wait");
+      sleep(60);
+    }
   int client_socket_fd, portno, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
@@ -178,6 +189,7 @@ int main(int argc, char *argv[]){
     }
     else {
       printf("restarting\n");
+      numberIncorrect++;
     }
   }
   
