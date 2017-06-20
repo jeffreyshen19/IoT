@@ -120,9 +120,9 @@ int main(int argc, char *argv[])
 		*
 		*/
 		char msgTxt[28];
-		strcpy(msgTxt, "ID = Group7 Password = 1010\n");
-		//strcat(msgTxt, password);
-		//strcat(msgTxt, "\n");
+		strcpy(msgTxt, "ID = Group7 Password = ");
+		strcat(msgTxt, password);
+		strcat(msgTxt, "e\n");
 		printf("msg txt = %s", msgTxt);
 
 	// send user input to the server
