@@ -149,9 +149,12 @@ int main(int argc, char *argv[]){
 		*/
 
 		char array[129];
+		char arr[129];
 		char groupname[6];
 		strcat(groupname, argv[3]);
 		memcpy(array, password, i);
+		memcpy(arr, groupname, 6);
+		arr[6] = '\0';
 		array[i] = '\0';
 		char msgTxt[28];
 
