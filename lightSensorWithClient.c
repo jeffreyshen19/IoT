@@ -13,16 +13,12 @@
 
 static volatile int restart = 1;
 
-void error(const char *msg)
-{
+void error(const char *msg){
   perror(msg);
   exit(0);
 }
 
-int main(int argc, char *argv[])
-{
-  
-  
+int main(int argc, char *argv[]){
   
   while (restart) {
     
@@ -92,20 +88,19 @@ int main(int argc, char *argv[])
     mraa_gpio_context button;
     button = mraa_gpio_init(3);
     mraa_gpio_dir(button, MRAA_GPIO_IN);
-    printf("1\n");
+
     while(mraa_gpio_read(button) == 0){
       usleep(10000);
     }
-    printf("2\n");
+
     while(mraa_gpio_read(button) == 1){
       usleep(10000);
     }
-    printf("3\n");
+
     int loopShouldRun = 1;
     int i = 0;
     
     while(loopShouldRun){
-      printf("At the loop should run area\n");
       int k;
       for(k = 0; k < 1000; k++){
         if(mraa_gpio_read(button) == 1) loopShouldRun = 0;
@@ -117,8 +112,7 @@ int main(int argc, char *argv[])
         i++;
       }
     }
-    printf("4\n");
-    
+  
     memset(buffer, 0 ,256);
     
     int j;
@@ -132,13 +126,9 @@ int main(int argc, char *argv[])
       }
     }
     
-    printf("5\n");
-    
     
     r = mraa_aio_close(adc_a0);
     
-    
-    printf("6\n");
     /*
     *
     * DONE SENDING PASSWORD
@@ -154,7 +144,6 @@ int main(int argc, char *argv[])
     strcat(msgTxt, "\n");
     printf("msg txt = %s", msgTxt);
     
-    printf("7\n");
     // send user input to the server
     
     n = write(client_socket_fd,msgTxt,strlen(msgTxt));
@@ -163,7 +152,6 @@ int main(int argc, char *argv[])
     if (n < 0) {
       error("ERROR writing to socket");
     }
-    printf("8\n");
     
     // clear out the buffer
     memset(buffer, 0, 256);
@@ -173,7 +161,7 @@ int main(int argc, char *argv[])
     if (n < 0) {
       error("ERROR reading from socket");
     }
-    printf("9\n");
+    
     printf("%s\n",buffer);
     
     if (strstr(buffer, "NO") == NULL) {  //if the buffer contains no then password was wrong
