@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 	 memset(buffer, 0 ,256);
 
    int j;
-   char password [4];
+   char password [3];
    for (j= 0; j<4; j++) {
      if (values[j] > 150) {
        password[j] = '1';
