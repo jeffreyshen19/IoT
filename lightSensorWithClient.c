@@ -22,11 +22,13 @@ void error(const char *msg)
 int main(int argc, char *argv[])
 {
   
+  
+  
+  while (restart) {
+    
   int client_socket_fd, portno, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  
-  while (restart) {
   
   // Read command line arguments, need to get the host IP address and port
     if (argc < 3) {
