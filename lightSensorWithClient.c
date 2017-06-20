@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 		char msgTxt[128];
 		strcpy(msgTxt, "ID = Group7 Password = ");
 		strcat(msgTxt, buffer);
-		prinft("msg txt = %s", msgTxt);
+		printf("msg txt = %s", msgTxt);
 
 	// send user input to the server
 
