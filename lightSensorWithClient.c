@@ -19,18 +19,12 @@ void error(const char *msg)
   exit(0);
 }
 
-void intHandler() {
-    restart = 0;
-}
-
 int main(int argc, char *argv[])
 {
   
   int client_socket_fd, portno, n;
   struct sockaddr_in serv_addr;
   struct hostent *server;
-  
-  signal(SIGINT, intHandler);
   
   while (restart) {
   
