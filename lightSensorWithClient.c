@@ -21,18 +21,18 @@ void error(const char *msg){
 int main(int argc, char *argv[]){
 	int numberIncorrect = 0;
 	while (restart) {
-		printf("Number incorrect: %d", numberIncorrect);
+		printf("Number incorrect: %d\n", numberIncorrect);
 
 		if (numberIncorrect > 7) {
-			printf("More than 7 incorrect guesses: 10 minute wait");
+			printf("More than 7 incorrect guesses: 10 minute wait\n");
 			sleep(600);
 		}
 		else if (numberIncorrect > 5) {
-			printf("More than 5 incorrect guesses: 5 minute wait");
+			printf("More than 5 incorrect guesses: 5 minute wait\n");
 			sleep(300);
 		}
 		else if (numberIncorrect > 3) {
-			printf("More than 3 incorrect guesses: 1 minutes wait");
+			printf("More than 3 incorrect guesses: 1 minutes wait\n");
 			sleep(60);
 		}
 		int client_socket_fd, portno, n;
