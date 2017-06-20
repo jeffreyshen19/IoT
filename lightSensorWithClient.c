@@ -93,6 +93,10 @@ int main(int argc, char *argv[])
   button = mraa_gpio_init(3);
   mraa_gpio_dir(button, MRAA_GPIO_IN);
   
+  while(mraa_gpio_read(button) == 0){
+    usleep(10000); 
+  }
+  
   int loopShouldRun = 1;
   int i = 0;
   
