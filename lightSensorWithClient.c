@@ -87,8 +87,7 @@ int main(int argc, char *argv[])
     if (adc_a0 == NULL) {
       return 1;
     }
-    
-    signal(SIGINT, do_when_interrupted);
+   
     
     int values [128];
     
