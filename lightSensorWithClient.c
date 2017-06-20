@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
   
   signal(SIGINT, intHandler);
   
+  while (restart) {
+  
   // Read command line arguments, need to get the host IP address and port
     if (argc < 3) {
       fprintf(stderr,"usage %s hostname port\n", argv[0]);
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
       error("ERROR connecting");
     }
   
-  while (restart) {
+  
     
     char buffer[256];
     
