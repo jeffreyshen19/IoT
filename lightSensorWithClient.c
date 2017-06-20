@@ -96,6 +96,7 @@ int main(int argc, char *argv[])
     mraa_gpio_dir(button, MRAA_GPIO_IN);
     
     while(mraa_gpio_read(button) == 0){
+      printf("Waiting for the button to be pressed");
       usleep(10000);
     }
     
@@ -103,6 +104,7 @@ int main(int argc, char *argv[])
     int i = 0;
     
     while(loopShouldRun){
+      printf("At the loop should run area");
       int k;
       for(k = 0; k < 1000; k++){
         if(mraa_gpio_read(button) == 1) loopShouldRun = 0;
