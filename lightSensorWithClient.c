@@ -96,20 +96,20 @@ int main(int argc, char *argv[])
     mraa_gpio_context button;
     button = mraa_gpio_init(3);
     mraa_gpio_dir(button, MRAA_GPIO_IN);
-    
+    printf("1");
     while(mraa_gpio_read(button) == 0){
       usleep(10000);
     }
-    
+    printf("2");
     while(mraa_gpio_read(button) == 1){
       usleep(10000);
     }
-    
+    printf("3");
     int loopShouldRun = 1;
     int i = 0;
     
     while(loopShouldRun){
-      printf("At the loop should run area");
+      printf("At the loop should run area\n");
       int k;
       for(k = 0; k < 1000; k++){
         if(mraa_gpio_read(button) == 1) loopShouldRun = 0;
