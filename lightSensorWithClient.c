@@ -6,6 +6,16 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <signal.h>
+#include <mraa/aio.h>
+#include <mraa.h>
+
+sig_atomic_t volatile run_flag = 1;
+
+void do_when_interrupted(int sig) {
+	if (sig == SIGINT)
+		run_flag = 0;
+}
 
 void error(const char *msg)
 {
@@ -85,7 +95,7 @@ int main(int argc, char *argv[])
 
    }
 
-	 buffer = "";
+	
 	 memset(buffer, 0 ,256);
 
    int j;
