@@ -102,17 +102,17 @@ int main(int argc, char *argv[])
    int password [4];
    for (j= 0; j<4; j++) {
      if (values[j] > 150) {
-       buffer[j] = 1;
+       password[j] = 1;
      }
      else {
-       buffer[j] = 0;
+       password[j] = 0;
   	 }
    }
 	printf("made it this far");
 
 		int x;
 		for (x = 0; x < 4; x++) {
-			printf("%c", buffer[x]);
+			printf("%c", password[x]);
 		}
 
 		printf(" : that was the value stored in buffer\n");
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 		*/
 		char msgTxt[128];
 		strcpy(msgTxt, "ID = Group7 Password = ");
-		strcat(msgTxt, buffer);
+		strcat(msgTxt, password);
 		printf("msg txt = %s", msgTxt);
 
 	// send user input to the server
