@@ -90,15 +90,15 @@ int main(int argc, char *argv[])
     mraa_gpio_context button;
     button = mraa_gpio_init(3);
     mraa_gpio_dir(button, MRAA_GPIO_IN);
-    printf("1");
+    printf("1\n");
     while(mraa_gpio_read(button) == 0){
       usleep(10000);
     }
-    printf("2");
+    printf("2\n");
     while(mraa_gpio_read(button) == 1){
       usleep(10000);
     }
-    printf("3");
+    printf("3\n");
     int loopShouldRun = 1;
     int i = 0;
     
@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
         i++;
       }
     }
-    
+    printf("4\n");
     
     memset(buffer, 0 ,256);
     
