@@ -149,9 +149,9 @@ int main(int argc, char *argv[])
     memcpy(array, password, i);
     array[i] = '\0';
     char msgTxt[28];
-    strcpy(msgTxt, "ID = Group7 Password = 0011");
-    //strcat(msgTxt, array);
-    //strcat(msgTxt, "\n");
+    strcpy(msgTxt, "ID = Group7 Password = ");
+    strcat(msgTxt, array);
+    strcat(msgTxt, "\n");
     printf("msg txt = %s", msgTxt);
     
     printf("7\n");
