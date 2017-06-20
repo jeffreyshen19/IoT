@@ -176,6 +176,7 @@ int main(int argc, char *argv[])
     
     if (strstr(buffer, "NO") == NULL) {  //if the buffer contains no then password was wrong
       restart = 0;
+      printf("other option");
     }
     else {
       printf("restarting\n");
