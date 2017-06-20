@@ -8,6 +8,7 @@
 #include <netdb.h>
 #include <signal.h>
 #include <mraa/aio.h>
+#include <mraa/gpio.h>
 #include <mraa.h>
 
 sig_atomic_t volatile run_flag = 1;
@@ -86,21 +87,34 @@ int main(int argc, char *argv[])
 
    signal(SIGINT, do_when_interrupted);
 
-   int values [4];
-   int i;
-   for(i = 0; i<4;i++) {
-     sleep(1);
-     printf("taking input now\n");
-     values[i] = mraa_aio_read(adc_a0);
+   int values [128];
+	
+	mraa_gpio_context button;
+	button = mraa_gpio_init(3);
+	mraa_gpio_dir(button, MRAA_GPIO_IN);
 
-   }
+	int loopShouldRun = 1;
+	int i = 0;
+	
+	while(loopShouldRun){
+		int k;
+		for(k = 0; k < 1000; k++){
+			if(mraa_gpio_read(button) == 1) loopShouldRun = 0;
+			usleep(1000);	
+		}
+		if(loopShouldRun){
+			printf("taking input now\n");
+   			values[i] = mraa_aio_read(adc_a0);
+			i++;
+		}
+	}
 
 	
 	 memset(buffer, 0 ,256);
 
    int j;
-   char password [3];
-   for (j= 0; j<4; j++) {
+   char password [i + 1];
+   for (j = 0; j < i + 1; j++) {
      if (values[j] > 200) {
        password[j] = '1';
      }
@@ -120,7 +134,7 @@ int main(int argc, char *argv[])
 		*
 		*/
 	
-		char array[20];
+		char array[129];
 	memcpy(array, password, 4);
 	array[4] = '\0';
 		char msgTxt[28];
