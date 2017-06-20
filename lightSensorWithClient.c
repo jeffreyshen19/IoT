@@ -179,6 +179,8 @@ int main(int argc, char *argv[])
     if (strstr(buffer, "NO") == NULL) {  //if the buffer contains no then password was wrong
       restart = 0;
       printf("other option");
+      close(client_socket_fd);
+
     }
     else {
       printf("restarting\n");
@@ -186,6 +188,5 @@ int main(int argc, char *argv[])
   }
   
   // clean up the file descriptors
-  close(client_socket_fd);
   return 0;
 }
