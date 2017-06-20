@@ -38,6 +38,7 @@ int main(int argc, char *argv[]){
 		int client_socket_fd, portno, n;
 		struct sockaddr_in serv_addr;
 		struct hostent *server;
+		printf("1\n");
 
 		// Read command line arguments, need to get the host IP address and port
 		if (argc < 3) {
@@ -77,6 +78,8 @@ int main(int argc, char *argv[]){
 
 
 		char buffer[256];
+				printf("2\n");
+
 
 		/*
 		*
@@ -102,13 +105,17 @@ int main(int argc, char *argv[]){
 		button = mraa_gpio_init(3);
 		mraa_gpio_dir(button, MRAA_GPIO_IN);
 
+				printf("3\n");
+
 		while(mraa_gpio_read(button) == 0){
 			usleep(10000);
 		}
+		printf("4\n");
 
 		while(mraa_gpio_read(button) == 1){
 			usleep(10000);
 		}
+		printf("5\n");
 
 		int loopShouldRun = 1;
 		int i = 0;
@@ -125,6 +132,7 @@ int main(int argc, char *argv[]){
 				i++;
 			}
 		}
+		printf("6\n");
 
 		memset(buffer, 0 ,256);
 
