@@ -20,8 +20,9 @@ void error(const char *msg){
 
 int main(int argc, char *argv[]){
   int numberIncorrect = 0;
-  printf("Number incorrect: %d", numberIncorrect);
   while (restart) {
+  printf("Number incorrect: %d", numberIncorrect);
+
     if (numberIncorrect > 7) {
       printf("More than 7 incorrect guesses: 10 minute wait");
       sleep(600);
