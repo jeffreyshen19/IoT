@@ -136,12 +136,18 @@ int main(int argc, char *argv[]){
     */
     
     char array[129];
+    char groupname[6];
+    strcat(groupname, argv[3]);
     memcpy(array, password, i);
     array[i] = '\0';
     char msgTxt[28];
-    strcpy(msgTxt, "ID = Group7 Password = ");
+    
+    strcpy(msgTxt, "ID = "); //Group7 Password = 
+    strcat(msgTxt, groupname);
+    strcat(msgTxt, " Password = ");
     strcat(msgTxt, array);
     strcat(msgTxt, "\n");
+    
     printf("msg txt = %s", msgTxt);
     
     // send user input to the server
