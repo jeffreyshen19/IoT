@@ -99,13 +99,13 @@ int main(int argc, char *argv[])
 	 memset(buffer, 0 ,256);
 
    int j;
-   int password [4];
+   char password [4];
    for (j= 0; j<4; j++) {
      if (values[j] > 150) {
-       password[j] = 1;
+       password[j] = '1';
      }
      else {
-       password[j] = 0;
+       password[j] = '0';
   	 }
    }
 	printf("made it this far");
