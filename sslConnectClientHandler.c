@@ -43,6 +43,8 @@ void error(const char *msg)
 }
 
 int main(int argc, char *argv[]) {
+	
+	printf("FIRST LINE");
     
   /*
    *
