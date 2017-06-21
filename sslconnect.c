@@ -123,6 +123,13 @@ int main() {
   X509_NAME_print_ex(outbio, certname, 0, 0);
   BIO_printf(outbio, "\n");
 
+  //Write to server
+  char *msg = "ID = Group6 Password = 111111";
+  SSL_write(ssl, msg, strlen(msg));			/* encrypt & send message */
+  bytes = SSL_read(ssl, buf, sizeof(buf));	/* get reply & decrypt */
+  buf[bytes] = 0;
+  printf("Received: \"%s\"\n", buf);
+
   /* ---------------------------------------------------------- *
    * Free the structures we don't need anymore                  *
    * -----------------------------------------------------------*/
