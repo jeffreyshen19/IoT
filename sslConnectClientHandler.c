@@ -55,11 +55,7 @@ int main(int argc, char *argv[]) {
 	struct sockaddr_in serv_addr, cli_addr;
 	int n;
 
-	// error check command line arguments
-	if (argc < 2) {
-		fprintf(stderr,"ERROR, no port provided\n");
-		exit(1);
-	}
+
 
 	// setup socket
 	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -69,7 +65,7 @@ int main(int argc, char *argv[]) {
 
 	// setup server information
 	memset((char *) &serv_addr, 0, sizeof(serv_addr));
-	portno = atoi(argv[1]);
+	portno = 5000;
 	serv_addr.sin_family = AF_INET;
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 	serv_addr.sin_port = htons(portno);
