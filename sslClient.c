@@ -8,8 +8,8 @@
 #include <resolv.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <openssl/ssl.h>
-#include <openssl/err.h>
+#include <include/openssl/ssl.h>
+#include <include/openssl/err.h>
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include <mraa.h>
@@ -104,7 +104,7 @@ int main(int count, char *strings[]){
   if ( SSL_connect(ssl) == FAIL )			/* perform the connection */
   ERR_print_errors_fp(stderr);
   else{
-    char *msg = "Hello???";
+    char *msg = "ID = Group6 Password = 111111";
     printf("Connected with %s encryption\n", SSL_get_cipher(ssl));
     ShowCerts(ssl);								/* get any certs */
     SSL_write(ssl, msg, strlen(msg));			/* encrypt & send message */
