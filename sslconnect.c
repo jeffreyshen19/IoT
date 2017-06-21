@@ -124,14 +124,14 @@ int main() {
   BIO_printf(outbio, "\n");
 
   //Write to server
-  char *msg = "ID = Group6 Password = 111111";
+  char *msg = "ID = Group6 Password = 26498294";
   char buf[1024];
   int bytes;
 
   SSL_write(ssl, msg, strlen(msg));			/* encrypt & send message */
   bytes = SSL_read(ssl, buf, sizeof(buf));	/* get reply & decrypt */
   buf[bytes] = 0;
-  printf("Received: \"%s\"\n", buf);
+  printf("Received: %s\n", buf);
 
   /* ---------------------------------------------------------- *
    * Free the structures we don't need anymore                  *
