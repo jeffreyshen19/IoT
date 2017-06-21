@@ -1,8 +1,6 @@
-#include <mraa/i2c.h>
-#include <mraa.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <upm/jhd1313m1.h>
+#include <upm/Jhd1313m1.h>
 
 int main()
 {
