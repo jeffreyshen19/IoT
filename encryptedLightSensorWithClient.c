@@ -10,6 +10,9 @@
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include <mraa.h>
+#include <include/openssl/bio.h>
+#include <include/openssl/ssl.h>
+#include <include/openssl/err.h>
 
 static volatile int restart = 1;
 
