@@ -8,8 +8,8 @@
 #include <resolv.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include "openssl/include/openssl/ssl.h"
-#include "openssl/include/openssl/err.h"
+// #include <openssl/include/openssl/ssl.h>
+// #include <openssl/include/openssl/err.h>
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include <mraa.h>
@@ -23,12 +23,13 @@ int OpenConnection(const char *hostname, int port){   int sd;
   struct hostent *host;
   struct sockaddr_in addr;
 
-  if ( (host = gethostbyname(hostname)) == NULL ){
+  if ( (host = gethostbyname(hostname)) == NULL ){ 
     perror(hostname);
     abort();
   }
+                                                  
   sd = socket(PF_INET, SOCK_STREAM, 0);
-  bzero(&addr, sizeof(addr));
+  bzero(&addr, sizeof(addr)); 
   addr.sin_family = AF_INET;
   addr.sin_port = htons(port);
   addr.sin_addr.s_addr = *(long*)(host->h_addr);
