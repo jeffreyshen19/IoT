@@ -42,7 +42,7 @@ void error(const char *msg)
 	exit(1);
 }
 
-int main(int argc, char *argv[]) {
+int main(void) {
 	
 	printf("FIRST LINE");
     
