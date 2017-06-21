@@ -8,8 +8,8 @@
 #include <resolv.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <include/openssl/ssl.h>
-#include <include/openssl/err.h>
+#include <openssl/include/openssl/ssl.h>
+#include <openssl/include/openssl/err.h>
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include <mraa.h>
