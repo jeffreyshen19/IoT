@@ -29,7 +29,7 @@ int create_socket(char[], BIO *);
 
 int main() {
 
-  char           dest_url[] = "https://www.hp.com";
+  char           dest_url[] = "r01.cs.ucla.edu";
   BIO              *certbio = NULL;
   BIO               *outbio = NULL;
   X509                *cert = NULL;
@@ -127,7 +127,7 @@ int main() {
   char *msg = "ID = Group6 Password = 111111";
   char buf[1024];
   int bytes;
-  
+
   SSL_write(ssl, msg, strlen(msg));			/* encrypt & send message */
   bytes = SSL_read(ssl, buf, sizeof(buf));	/* get reply & decrypt */
   buf[bytes] = 0;
@@ -150,7 +150,7 @@ int main() {
 int create_socket(char url_str[], BIO *out) {
   int sockfd;
   char hostname[256] = "";
-  char    portnum[6] = "443";
+  char    portnum[6] = "19050";
   char      proto[6] = "";
   char      *tmp_ptr = NULL;
   int           port;
