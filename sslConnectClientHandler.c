@@ -43,6 +43,7 @@ void error(const char *msg)
 }
 
 int main(int argc, char *argv[]) {
+    
   /*
    *
    * BELOW IS THE CODE THAT FUNCTIONS AS A SERVER TO THE CLIENT EDISON
@@ -56,12 +57,13 @@ int main(int argc, char *argv[]) {
 	int n;
 
 
-
+    printf("1");
 	// setup socket
 	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (server_socket_fd < 0) {
 		error("ERROR opening socket");
 	}
+    printf("2");
 
 	// setup server information
 	memset((char *) &serv_addr, 0, sizeof(serv_addr));
@@ -70,15 +72,21 @@ int main(int argc, char *argv[]) {
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 	serv_addr.sin_port = htons(portno);
 
+    printf("3");
+
 	// bind the socket to an address
 	if (bind(server_socket_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
 		error("ERROR on binding");
 	}
 
+    printf("4");
+    
 	// listen for incoming connections
 	// accept at most 5 connections before refusing them
 	listen(server_socket_fd, 5);
 	clilen = sizeof(cli_addr);
+
+    printf("5");
 
 	// block until there is a new connection. When one is received, accept it
 	client_socket_fd = accept(server_socket_fd, (struct sockaddr *) &cli_addr, &clilen);
@@ -86,12 +94,16 @@ int main(int argc, char *argv[]) {
 		error("ERROR on accept");
 	}
 
+    printf("6");
+   
 	// clear the buffer
 	memset(buffer, 0, 256);
 	n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
 	if (n < 0) {
 		error("ERROR reading from socket");
 	}
+
+    printf("7");
 
 	// print the message to console
 	printf("Here is the message: %s\n",buffer);
@@ -103,6 +115,8 @@ int main(int argc, char *argv[]) {
 	}
 	close(client_socket_fd);
 	close(server_socket_fd);
+
+    printf("8");
 
 
   /*
