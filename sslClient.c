@@ -27,6 +27,7 @@ int OpenConnection(const char *hostname, int port){   int sd;
     perror(hostname);
     abort();
   }
+
   sd = socket(PF_INET, SOCK_STREAM, 0);
   bzero(&addr, sizeof(addr));
   addr.sin_family = AF_INET;
