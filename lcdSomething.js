@@ -33,7 +33,7 @@ if (blue > 255) {
 }
 display.setColor(red, green, blue);
 display.setCursor(0, 0);
-display.write(' Hackster.io');
+display.write(' RYAN GOGGINS');
 display.setCursor(1,1);
 display.write('Intel Edison');
 // extra padding clears out previous text
