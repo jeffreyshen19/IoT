@@ -29,7 +29,7 @@ int create_socket(char[], BIO *);
 
 int main() {
 
-  char           dest_url[] = "r01.cs.ucla.edu";
+  char           dest_url[] = "https://www.hp.com";
   BIO              *certbio = NULL;
   BIO               *outbio = NULL;
   X509                *cert = NULL;
@@ -150,7 +150,7 @@ int main() {
 int create_socket(char url_str[], BIO *out) {
   int sockfd;
   char hostname[256] = "";
-  char    portnum[6] = "19050";
+  char    portnum[6] = "443";
   char      proto[6] = "";
   char      *tmp_ptr = NULL;
   int           port;
