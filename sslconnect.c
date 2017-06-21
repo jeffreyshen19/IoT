@@ -125,6 +125,9 @@ int main() {
 
   //Write to server
   char *msg = "ID = Group6 Password = 111111";
+  char buf[1024];
+  int bytes;
+  
   SSL_write(ssl, msg, strlen(msg));			/* encrypt & send message */
   bytes = SSL_read(ssl, buf, sizeof(buf));	/* get reply & decrypt */
   buf[bytes] = 0;
