@@ -28,7 +28,7 @@
  * ---------------------------------------------------------- */
 int create_socket(char[], BIO *);
 
-int main() {
+int main(int argc, char *argv[]) {
 	int server_socket_fd, client_socket_fd, portno;
 	socklen_t clilen;
 	char buffer[256];
