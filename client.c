@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
 	// get user input
 	while(1){
-		printf("\x1B[34m[YOU]:\x1B[0m ");
+		printf("\033[1m\033[34m[YOU]:\x1B[0m ");
 		memset(buffer, 0 ,256);
 		fgets(buffer, 255, stdin); // the part that actually gets the user input
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 		if (n < 0) {
 			error("ERROR reading from socket");
 		}
-		printf("\x1B[37m[THEM]:\x1B[0m %s\n",buffer);
+		printf("\033[1m\033[37m[THEM]:\x1B[0m %s\n",buffer);
 		sleep(1);
 	}
 	// clean up the file descriptors
