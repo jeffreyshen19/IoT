@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
         }
     }
     
-    fclose(file_pointer);
+    fclose(file_ptr);
 
 	close(client_socket_fd);
 	close(server_socket_fd);
