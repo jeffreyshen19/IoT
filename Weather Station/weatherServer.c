@@ -7,6 +7,7 @@ The port number is passed as an argument */
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <signal.h>
 
 #define FILE_NAME "text.txt"
 
@@ -16,8 +17,16 @@ void error(const char *msg)
 	exit(1);
 }
 
+static volatile int keepRunning = 1;
+
+void intHandler(int dummy) {
+    keepRunning = 0;
+}
+
 int main(int argc, char *argv[])
 {
+	signal(SIGINT, intHandler);
+	
 	int server_socket_fd, client_socket_fd, portno;
 	socklen_t clilen;
 	char buffer[256];
@@ -62,13 +71,8 @@ int main(int argc, char *argv[])
 	FILE* file_ptr = fopen(FILE_NAME, "w");
 	file_ptr = fopen(FILE_NAME, "w");
 
-	int counter = 0;
-	while (1) {
-		counter++;
-		if (counter == 10) {
-			fclose(file_ptr);
-			break;
-		}
+	while (keepRunning) {
+
 		// clear the buffer
 		memset(buffer, 0, 256);
 		n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
@@ -91,6 +95,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	fclose(file_ptr);
 	
 	close(client_socket_fd);
 	close(server_socket_fd);
