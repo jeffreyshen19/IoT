@@ -4,6 +4,13 @@
 #include <mraa/aio.h>
 #include <mraa.h>
 
+sig_atomic_t volatile run_flag = 1;
+
+void do_when_interrupted(int sig) {
+	if (sig == SIGINT)
+		run_flag = 0;
+}
+
 int main(){
   mraa_gpio_context led, buzzer;
   mraa_aio_context mic;
