@@ -157,7 +157,7 @@ int main(int argc, char *argv[]){
     light_value = mraa_aio_read(lightsensor);
 
     memset(buffer, 0 ,256);
-    sprintf(buffer, "%lu,%.5f\n,%d ", millis, thermometer_value, light_value);
+    sprintf(buffer, "%lu,%.5f,%d\n", millis, thermometer_value, light_value);
     printf("%s", buffer);
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
