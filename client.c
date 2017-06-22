@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
 		error("ERROR connecting");
 	}
 	
-	printf("\x1B[32mConnected to server. You may begin chatting.\n");
+	printf("\033[1m\033[32m Connected to server. You may begin chatting.\n");
 
 	// get user input
 	while(1){
-		printf("\x1B[34m[YOU]: ");
+		printf("\x1B[34m [YOU]: ");
 		memset(buffer, 0 ,256);
 		fgets(buffer, 255, stdin); // the part that actually gets the user input
 
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 		if (n < 0) {
 			error("ERROR reading from socket");
 		}
-		printf("\x1B[37m[THEM]: %s\n",buffer);
+		printf("\x1B[37m [THEM]: %s\n",buffer);
 		sleep(1);
 	}
 	// clean up the file descriptors
