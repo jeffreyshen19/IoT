@@ -115,28 +115,24 @@ int main(int argc, char *argv[])
         if (n < 0) {
             error("ERROR reading from socket");
         }
-        
-        memset(buffer1, 0, 256);
-        n1 = read(client_socket_fd1, buffer1, 255);
-        if (n1 < 0) {
-            error("ERROR reading from socket");
-        }
-        
-        printf("Here is the message from connection 1: %s\n", buffer1);
-        
-        // print the message to console
-        printf("Here is the message from connection 0: %s\n",buffer);
-        
-        
-        
-	    
-	    
-	    
-        // send an acknowledgement back to the client saying that we received the message
+	    // send an acknowledgement back to the client saying that we received the message
         n = write(client_socket_fd,buffer1,strlen(buffer1)); 
         if (n < 0) {
             error("ERROR writing to socket");
         }
+        
+	    printf("Here is the message from connection 1: %s\n", buffer1);
+	    
+	    
+        memset(buffer1, 0, 256);
+        n1 = read(client_socket_fd1, buffer1, 255);
+        if (n1 < 0) {
+            error("ERROR reading from socket");
+        }        
+        
+        // print the message to console
+        printf("Here is the message from connection 0: %s\n",buffer);
+        
         
         n1 = write(client_socket_fd1, buffer, strlen(buffer));
         if (n1 < 0) {
