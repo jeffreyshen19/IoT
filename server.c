@@ -151,21 +151,21 @@ char moderatorMessage[256];
 
     
     
-    printf("Do you want to send a message? (1/0) \n");
+//     printf("Do you want to send a message? (1/0) \n");
    
-    c=getchar();
-    memset(moderatorMessage, 0, 256);
-    if (c==1) {
-      printf("Enter your message: \n");
-      scanf("%s", moderatorMessage);
-       char msgTxt[28];
-      strcpy(msgTxt, "A message from the moderator: ");
-      strcat(msgTxt, moderatorMessage);
-      strcat(msgTxt, "\n");
-      printf("msg txt = %s", msgTxt);
-      n1 = write(client_socket_fd1, msgTxt, strlen(msgTxt));
-      n = write(client_socket_fd,msgTxt,strlen(msgTxt));
-    }
+//     c=getchar();
+//     memset(moderatorMessage, 0, 256);
+//     if (c==1) {
+//       printf("Enter your message: \n");
+//       scanf("%s", moderatorMessage);
+//        char msgTxt[28];
+//       strcpy(msgTxt, "A message from the moderator: ");
+//       strcat(msgTxt, moderatorMessage);
+//       strcat(msgTxt, "\n");
+//       printf("msg txt = %s", msgTxt);
+//       n1 = write(client_socket_fd1, msgTxt, strlen(msgTxt));
+//       n = write(client_socket_fd,msgTxt,strlen(msgTxt));
+//     }
    
     
     
