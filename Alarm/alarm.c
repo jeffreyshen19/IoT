@@ -21,7 +21,7 @@ int main(){
     mic_value = mraa_aio_read(mic);
     printf("here");
     printf("Mic value is: %d", mic_value);
-    if(mic_value > 340){
+    if(mic_value > 330){
       mraa_gpio_write(led, 1);
       mraa_gpio_write(buzzer, 1);
       sleep(1);
