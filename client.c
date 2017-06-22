@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
 	// get user input
 	while(1){
-		printf("Please enter the message: ");
+		printf("\x1B[34m[YOU]: ");
 		memset(buffer, 0 ,256);
 		fgets(buffer, 255, stdin); // the part that actually gets the user input
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 		if (n < 0) {
 			error("ERROR reading from socket");
 		}
-		printf("%s\n",buffer);
+		printf("\x1B[37m[THEM]: %s\n",buffer);
 		sleep(1);
 	}
 	// clean up the file descriptors
