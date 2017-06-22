@@ -20,6 +20,7 @@ int main(){
   mic = mraa_aio_init(0);
 
   mraa_gpio_dir(led, MRAA_GPIO_OUT);
+  mraa_gpio_dir(buzzer, MRAA_GPIO_OUT);
 
   while(1){
     mic_value = mraa_aio_read(mic);
