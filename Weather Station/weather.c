@@ -11,6 +11,13 @@
 #include <math.h>
 #include <time.h>
 
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/pem.h>
+#include <openssl/x509.h>
+#include <openssl/x509_vfy.h>
+
 void error(const char *msg){
 	perror(msg);
 	exit(0);
