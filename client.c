@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 		error("ERROR connecting");
 	}
 	
-	printf("\033[1m\033[32m Connected to server. You may begin chatting.\n");
+	printf("\033[1m\033[32mConnected to server. You may begin chatting.\n");
 
 	// get user input
 	while(1){
