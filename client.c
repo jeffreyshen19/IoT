@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 
 	// Convert the arguments to the appropriate data types
 	portno = atoi(argv[2]);
-
+	
 	// setup the socket
 	client_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	// check if the socket was created successfully. If it wasnt, display an error and exit
@@ -54,6 +54,8 @@ int main(int argc, char *argv[])
 	if (connect(client_socket_fd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){ 
 		error("ERROR connecting");
 	}
+	
+	printf("\x1B[32mConnected to server. You may begin chatting.\n");
 
 	// get user input
 	while(1){
