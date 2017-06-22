@@ -5,21 +5,21 @@
 #include <mraa.h>
 
 int main(){
-  printf("11");
+  printf("\n");
   mraa_gpio_context led, buzzer;
   mraa_aio_context mic;
   led = mraa_gpio_init(4);
   buzzer = mraa_gpio_init(3);
   uint16_t mic_value = 0;
   mic = mraa_aio_init(0);
-  printf("1");
+  printf("1\n");
   mraa_gpio_dir(led, MRAA_GPIO_OUT);
   mraa_gpio_dir(buzzer, MRAA_GPIO_OUT);
-  printf("2");
+  printf("2\n");
   while(1){
     mic_value = mraa_aio_read(mic);
-    printf("here");
-    printf("Mic value is: %d", mic_value);
+    printf("here\n");
+    printf("Mic value is: %d\n", mic_value);
     if(mic_value > 330){
       mraa_gpio_write(led, 1);
       mraa_gpio_write(buzzer, 1);
