@@ -37,16 +37,16 @@ int main(int argc, char *argv[])
 
     
 	// setup socket
-	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	//fcntl(server_socket_fd, F_SETFL, O_NONBLOCK);
+	server_socket_fd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+	fcntl(server_socket_fd, F_SETFL, O_NONBLOCK);
 
 	if (server_socket_fd < 0) {	
 		error("ERROR opening socket");
 	}
     
     //setup socket1
-    server_socket_fd1 = socket(AF_INET, SOCK_STREAM, 0);
-	//fcntl(server_socket_fd1, F_SETFL, O_NONBLOCK);
+    server_socket_fd1 = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    fcntl(server_socket_fd1, F_SETFL, O_NONBLOCK);
 
     if (server_socket_fd1 < 0) {
         error("ERROR opening socket1");
