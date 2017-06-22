@@ -13,12 +13,13 @@ int main(){
   buzzer = mraa_gpio_init(3);
   uint16_t mic_value = 0;
   mic = mraa_aio_init(0);
-
+  printf("1");
   mraa_gpio_dir(led, MRAA_GPIO_OUT);
   mraa_gpio_dir(buzzer, MRAA_GPIO_OUT);
-
+  printf("2");
   while(1){
     mic_value = mraa_aio_read(mic);
+    printf("here");
     printf("Mic value is: %d", mic_value);
     if(mic_value > 340){
       mraa_gpio_write(led, 1);
