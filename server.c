@@ -157,7 +157,7 @@ char moderatorMessage[256];
     memset(moderatorMessage, 0, 256);
     if (c==1) {
       printf("Enter your message: \n");
-      gets(moderatorMessage);
+      scanf("%s", moderatorMessage);
        char msgTxt[28];
       strcpy(msgTxt, "A message from the moderator: ");
       strcat(msgTxt, moderatorMessage);
