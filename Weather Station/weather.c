@@ -123,12 +123,16 @@ int main(int argc, char *argv[]){
   */
   int R0 = 100000;
   int B = 4275;
+  mraa_init();
   mraa_aio_context thermometer;
-  float thermometer_value = 0.0;;
+  float R;
+  float thermometer_value = 0.0;
   thermometer = mraa_aio_init(0);
   
   while(1){
-    thermometer_value = 1.0/(log(1023.0/mraa_aio_read_float(thermometer)-1.0)/B+1/298.15)-273.15;
+    R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
+    R = R0 * R; 
+    thermometer_value = 1.0/(log(R/R0)/B+1/298.15)-263.15;
     printf("Temperature is: %.5f\n", thermometer_value);
     
     /*
@@ -140,7 +144,7 @@ int main(int argc, char *argv[]){
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
     read(client_socket_fd, buffer, 255);
-    printf("%s/n",buffer);
+    printf("%s\n",buffer);
     
     sleep(1);
     //usleep(100000);
