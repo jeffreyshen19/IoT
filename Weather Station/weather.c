@@ -9,6 +9,7 @@
 #include <mraa/aio.h>
 #include <mraa.h>
 #include <math.h>
+#include <time.h>
 
 void error(const char *msg){
 	perror(msg);
@@ -129,6 +130,13 @@ int main(int argc, char *argv[]){
   float thermometer_value = 0.0;
   thermometer = mraa_aio_init(0);
   
+  memset(buffer, 0 ,256); 
+  strcpy(buffer, "timestamp,degrees\n"); 
+  printf("%s", buffer);
+  write(client_socket_fd,buffer,strlen(buffer));
+  memset(buffer, 0, 256);
+  read(client_socket_fd, buffer, 255);
+
   while(1){
     R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
     R = R0 * R; 
@@ -138,13 +146,19 @@ int main(int argc, char *argv[]){
     /*
       Transmit data
     */
-     
+    
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+
+    unsigned long millis = (unsigned long)(tv.tv_sec) * 1000 + (unsigned long)(tv.tv_usec) / 1000;
+
     memset(buffer, 0 ,256);
-		ftoa(thermometer_value, buffer, 4);
+    sprintf(buffer, "%lu,%.5f\n", millis, thermometer_value);
+    printf("%s", buffer);
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
     read(client_socket_fd, buffer, 255);
-    printf("%s\n",buffer);
+    printf("\x1b[34m%s\x1b[0m\n",buffer);
     
     sleep(1);
     //usleep(100000);
