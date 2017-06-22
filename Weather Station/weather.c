@@ -18,6 +18,8 @@
 #include <openssl/x509.h>
 #include <openssl/x509_vfy.h>
 
+int create_socket(char[], BIO *, char*, int);
+
 void error(const char *msg){
 	perror(msg);
 	exit(0);
@@ -84,6 +86,32 @@ void ftoa(float n, char *res, int afterpoint)
 
 int main(int argc, char *argv[]){
   /*
+  	INITIALIZE SSL
+  */	
+	
+  char dest_url[] = "http://r01.cs.ucla.edu";
+  BIO *certbio = NULL;
+  BIO *outbio = NULL;
+  X509 *cert = NULL;
+  X509_NAME *certname = NULL;
+  const SSL_METHOD *method;
+  SSL_CTX *ctx;
+  SSL *ssl;
+  int sslServer = 0;
+  int ret, i;
+	
+  OpenSSL_add_all_algorithms();
+  ERR_load_BIO_strings();
+  ERR_load_crypto_strings();
+  SSL_load_error_strings();
+  certbio = BIO_new(BIO_s_file());
+  outbio  = BIO_new_fp(stdout, BIO_NOCLOSE);	
+  method = SSLv23_client_method();	
+  
+SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);	
+	ssl = SSL_new(ctx);
+	
+  /*
     SOCKET STUFF
   */
   int client_socket_fd, portno, n;
@@ -97,11 +125,11 @@ int main(int argc, char *argv[]){
 	}
   
   // setup the socket
-	client_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	//client_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	
-	if(client_socket_fd < 0) { // check if the socket was created successfully. If it wasnt, display an error and exit
+	/*if(client_socket_fd < 0) { // check if the socket was created successfully. If it wasnt, display an error and exit
 		error("ERROR opening socket");
-	}
+	}*/
   
   portno = atoi(argv[2]); // Convert the arguments to the appropriate data types
   
@@ -113,7 +141,7 @@ int main(int argc, char *argv[]){
 	}
   
   // clear our the serv_addr buffer
-	memset((char *) &serv_addr, 0, sizeof(serv_addr));
+	/*memset((char *) &serv_addr, 0, sizeof(serv_addr));
 	// set up the socket 
 	serv_addr.sin_family = AF_INET;
 	memcpy((char *)&serv_addr.sin_addr.s_addr, (char *)server->h_addr, server->h_length);
@@ -122,7 +150,7 @@ int main(int argc, char *argv[]){
 	// try to connect to the server
 	if (connect(client_socket_fd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0){ 
 		error("ERROR connecting");
-	}
+	}*/
   
   printf("\033[1m\033[32mConnected to server. Sending data now.\x1B[0m\n");
   
@@ -142,10 +170,15 @@ int main(int argc, char *argv[]){
   memset(buffer, 0 ,256); 
   strcpy(buffer, "timestamp,temperature,light levels\n"); 
   printf("%s", buffer);
-  write(client_socket_fd,buffer,strlen(buffer));
+  SSL_write(ssl, buffer, strlen(buffer));
+  /*write(client_socket_fd,buffer,strlen(buffer));
   memset(buffer, 0, 256);
-  read(client_socket_fd, buffer, 255);
+  read(client_socket_fd, buffer, 255);*/
 
+  //Prepare SSL connection
+  sslServer = create_socket(dest_url, outbio, server, portno);
+  SSL_set_fd(ssl, sslServer);
+	
   while(1){
     R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
     R = R0 * R; 
@@ -165,14 +198,73 @@ int main(int argc, char *argv[]){
     memset(buffer, 0 ,256);
     sprintf(buffer, "%lu,%.5f,%d\n", millis, thermometer_value, light_value);
     printf("%s", buffer);
-    write(client_socket_fd,buffer,strlen(buffer));
-    memset(buffer, 0, 256);
-    read(client_socket_fd, buffer, 255);
-    printf("\x1b[34m%s\x1b[0m\n",buffer);
-    
+	  
+	  //Write to server
+  char buf[1024];
+  int bytes;
+
+  SSL_write(ssl, buffer, strlen(buffer));			/* encrypt & send message */
+  bytes = SSL_read(ssl, buf, sizeof(buf));	/* get reply & decrypt */
+  buf[bytes] = 0;
+  printf("\x1b[34m%s\x1b[0m\", buf);
+	  
     sleep(1);
     //usleep(100000);
   }
 
+  //Free all connections.
+  SSL_free(ssl);
+  close(server);
+  X509_free(cert);
+  SSL_CTX_free(ctx);
+	
   return 0;
+}
+
+int create_socket(char url_str[], BIO *out, char* hostname, int port) {
+  int sockfd;
+  char      proto[6] = "";
+  char      *tmp_ptr = NULL;
+  int           port;
+  struct hostent *host;
+  struct sockaddr_in dest_addr;
+
+  if(url_str[strlen(url_str)] == '/')
+    url_str[strlen(url_str)] = '\0';
+
+  strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
+
+  strncpy(hostname, strstr(url_str, "://")+3, sizeof(hostname));
+
+  if(strchr(hostname, ':')) {
+    tmp_ptr = strchr(hostname, ':');
+    /* the last : starts the port number, if avail, i.e. 8443 */
+    strncpy(portnum, tmp_ptr+1,  sizeof(portnum));
+    *tmp_ptr = '\0';
+  }
+
+  if ( (host = gethostbyname(hostname)) == NULL ) {
+    BIO_printf(out, "Error: Cannot resolve hostname %s.\n",  hostname);
+    abort();
+  }
+
+  //Create TCP socket
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+  dest_addr.sin_family=AF_INET;
+  dest_addr.sin_port=htons(port);
+  dest_addr.sin_addr.s_addr = *(long*)(host->h_addr);
+
+  memset(&(dest_addr.sin_zero), '\0', 8);
+
+  tmp_ptr = inet_ntoa(dest_addr.sin_addr);
+
+  //Try connecting here
+  if ( connect(sockfd, (struct sockaddr *) &dest_addr,
+                              sizeof(struct sockaddr)) == -1 ) {
+    BIO_printf(out, "Error: Cannot connect to host %s [%s] on port %d.\n",
+             hostname, tmp_ptr, port);
+  }
+
+  return sockfd;
 }
