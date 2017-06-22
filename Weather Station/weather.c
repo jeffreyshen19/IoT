@@ -102,7 +102,7 @@ int main(int argc, char *argv[]){
     */
      
     memset(buffer, 0 ,256);
-		ftoa(thermometer_value, buffer, 4)
+		ftoa(thermometer_value, buffer, 4);
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
     read(client_socket_fd, buffer, 255);
