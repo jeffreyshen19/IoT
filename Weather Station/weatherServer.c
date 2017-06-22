@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 		printf("Here is the message: %s\n",buffer);
 		printf("Sending weather data to the text file...\n");
 
-		fprintf(file_ptr, "%s", buffer);
+		fprintf(file_ptr, "%s\n", buffer);
 
 
 
