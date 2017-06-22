@@ -143,7 +143,6 @@ int main(int argc, char *argv[]){
     R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
     R = R0 * R; 
     thermometer_value = 1.0/(log(R/R0)/B+1/298.15)-263.15;
-    printf("Temperature is: %.5f\n", thermometer_value);
     
     /*
       Transmit data
