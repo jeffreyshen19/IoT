@@ -24,6 +24,5 @@ int main(){
   }
 
   mraa_gpio_close(led);
-  mraa_gpio_close(buzzer);
   return 0;
 }
