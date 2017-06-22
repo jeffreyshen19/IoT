@@ -19,11 +19,12 @@ int main(){
 
   while(1){
     mic_value = mraa_aio_read(mic);
-    if(mic_value > 250){
+    if(mic_value > 310){
       mraa_gpio_write(led, 1);
       mraa_gpio_write(buzzer, 1);
       sleep(1);
       mraa_gpio_write(buzzer, 0);
+      mraa_gpio_write(led, 0);
     }
     sleep(1);
   }
