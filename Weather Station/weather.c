@@ -18,7 +18,7 @@
 #include <openssl/x509.h>
 #include <openssl/x509_vfy.h>
 
-int create_socket(char[], BIO *, char*, int);
+int create_socket(char[], BIO *, char*, char*);
 
 void error(const char *msg){
 	perror(msg);
