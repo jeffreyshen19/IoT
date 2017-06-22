@@ -56,22 +56,25 @@ int main(int argc, char *argv[])
 	if (client_socket_fd < 0) {
 		error("ERROR on accept");
 	}
-
-	// clear the buffer
-	memset(buffer, 0, 256);
-	n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
-	if (n < 0) {
-		error("ERROR reading from socket");
-	}
-
-	// print the message to console
-	printf("Here is the message: %s\n",buffer);
-
-	// send an acknowledgement back to the client saying that we received the message
-	n = write(client_socket_fd, "I got your message", 18);
-	if (n < 0) {
-		error("ERROR writing to socket");
-	}
+    while (1) {
+        
+        // clear the buffer
+        memset(buffer, 0, 256);
+        n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
+        if (n < 0) {
+            error("ERROR reading from socket");
+        }
+        
+        // print the message to console
+        printf("Here is the message: %s\n",buffer);
+        
+        // send an acknowledgement back to the client saying that we received the message
+        n = write(client_socket_fd, "I got your message", 18);
+        if (n < 0) {
+            error("ERROR writing to socket");
+        }
+        
+    }
 	close(client_socket_fd);
 	close(server_socket_fd);
 	return 0; 
