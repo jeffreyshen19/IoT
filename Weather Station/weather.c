@@ -103,9 +103,9 @@ int main(int argc, char *argv[]){
      
     memset(buffer, 0 ,256);
 		ftoa(thermometer_value, buffer, 4)
-    n = write(client_socket_fd,buffer,strlen(buffer));
+    write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
-    n = read(client_socket_fd, buffer, 255);
+    read(client_socket_fd, buffer, 255);
     printf("%s/n",buffer);
     
     sleep(1);
