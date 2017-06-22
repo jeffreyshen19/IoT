@@ -23,7 +23,7 @@ int main(){
       mraa_gpio_write(buzzer, 0);
       mraa_gpio_write(led, 0);
     }
-    sleep(1);
+    usleep(100000);
   }
 
   mraa_gpio_close(led);
