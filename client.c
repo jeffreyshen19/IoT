@@ -56,29 +56,31 @@ int main(int argc, char *argv[])
 	}
 
 	// get user input
-	printf("Please enter the message: ");
-	memset(buffer, 0 ,256);
-	fgets(buffer, 255, stdin); // the part that actually gets the user input
+	while(1){
+		printf("Please enter the message: ");
+		memset(buffer, 0 ,256);
+		fgets(buffer, 255, stdin); // the part that actually gets the user input
 
-	// send user input to the server
-	n = write(client_socket_fd,buffer,strlen(buffer));
-	// n contains how many bytes were received by the server
-	// if n is less than 0, then there was an error
-	if (n < 0) {
-		error("ERROR writing to socket");
+		// send user input to the server
+		n = write(client_socket_fd,buffer,strlen(buffer));
+		// n contains how many bytes were received by the server
+		// if n is less than 0, then there was an error
+		if (n < 0) {
+			error("ERROR writing to socket");
+		}
+
+		// clear out the buffer
+		memset(buffer, 0, 256);
+
+		// get the response from the server and print it to the user
+		n = read(client_socket_fd, buffer, 255);
+		if (n < 0) {
+			error("ERROR reading from socket");
+		}
+		printf("%s\n",buffer);
+		sleep(1);
 	}
-
-	// clear out the buffer
-	memset(buffer, 0, 256);
-
-	// get the response from the server and print it to the user
-	n = read(client_socket_fd, buffer, 255);
-	if (n < 0) {
-		error("ERROR reading from socket");
-	}
-	printf("%s\n",buffer);
-
 	// clean up the file descriptors
-	close(client_socket_fd);
+	//close(client_socket_fd);
 	return 0;
 }
