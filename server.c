@@ -130,28 +130,15 @@ int main(int argc, char *argv[])
         
         
 	    
-	 char message1[129];
-	 char message2[129];
-    strcpy(message1, "Other user says: ");
-    strcat(message1, buffer1);
-    strcat(message1, "\n");
-	    
-    strcpy(message2, "Other user says: ");
-    strcat(message2, buffer);
-    strcat(message2, "\n");
-
-    // send user input to the server
-
-	    
 	    
 	    
         // send an acknowledgement back to the client saying that we received the message
-        n = write(client_socket_fd,message1,strlen(message1)); 
+        n = write(client_socket_fd,buffer1,strlen(buffer1)); 
         if (n < 0) {
             error("ERROR writing to socket");
         }
         
-        n1 = write(client_socket_fd1, message2, strlen(message2));
+        n1 = write(client_socket_fd1, buffer, strlen(buffer));
         if (n1 < 0) {
             error("ERROR writing to socket");
         }
