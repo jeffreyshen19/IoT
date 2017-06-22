@@ -125,13 +125,15 @@ int main(int argc, char *argv[]){
   int R0 = 100000;
   int B = 4275;
   mraa_init();
-  mraa_aio_context thermometer;
+  mraa_aio_context thermometer, lightsensor;;
   float R;
   float thermometer_value = 0.0;
   thermometer = mraa_aio_init(0);
-  
+  lightsensor = mraa_aio_init(1);
+  int light_value = 0;
+
   memset(buffer, 0 ,256); 
-  strcpy(buffer, "timestamp,degrees\n"); 
+  strcpy(buffer, "timestamp,temperature,light levels\n"); 
   printf("%s", buffer);
   write(client_socket_fd,buffer,strlen(buffer));
   memset(buffer, 0, 256);
@@ -141,7 +143,6 @@ int main(int argc, char *argv[]){
     R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
     R = R0 * R; 
     thermometer_value = 1.0/(log(R/R0)/B+1/298.15)-263.15;
-    printf("Temperature is: %.5f\n", thermometer_value);
     
     /*
       Transmit data
@@ -152,8 +153,10 @@ int main(int argc, char *argv[]){
 
     unsigned long millis = (unsigned long)(tv.tv_sec) * 1000 + (unsigned long)(tv.tv_usec) / 1000;
 
+    light_value = mraa_aio_read(lightsensor);
+
     memset(buffer, 0 ,256);
-    sprintf(buffer, "%lu,%.5f\n", millis, thermometer_value);
+    sprintf(buffer, "%lu,%.5f,%d\n", millis, thermometer_value, light_value);
     printf("%s", buffer);
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
