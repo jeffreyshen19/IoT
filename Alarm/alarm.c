@@ -4,9 +4,8 @@
 #include <mraa/aio.h>
 #include <mraa.h>
 
-
-
 int main(){
+  printf("11");
   mraa_gpio_context led, buzzer;
   mraa_aio_context mic;
   led = mraa_gpio_init(4);
