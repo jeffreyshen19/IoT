@@ -131,7 +131,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
 		error("ERROR opening socket");
 	}*/
 
-  portno = atoi(argv[2]); // Convert the arguments to the appropriate data types
+  //portno = atoi(argv[2]); // Convert the arguments to the appropriate data types
 
   // check if the IP entered by the user is valid
 	server = gethostbyname(argv[1]);
@@ -176,7 +176,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
   read(client_socket_fd, buffer, 255);*/
 
   //Prepare SSL connection
-  sslServer = create_socket(dest_url, outbio, server, portno);
+  sslServer = create_socket(dest_url, outbio, server, argv[2]);
   SSL_set_fd(ssl, sslServer);
 
   while(1){
@@ -221,7 +221,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
   return 0;
 }
 
-int create_socket(char url_str[], BIO *out, char* hostname, int port) {
+int create_socket(char url_str[], BIO *out, char* hostname, char* portnum) {
   int sockfd;
   char      proto[6] = "";
   char      *tmp_ptr = NULL;
@@ -232,6 +232,8 @@ int create_socket(char url_str[], BIO *out, char* hostname, int port) {
   if(url_str[strlen(url_str)] == '/')
     url_str[strlen(url_str)] = '\0';
 
+  port = atoi(argv[2]);	
+	
   strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
 
   strncpy(hostname, strstr(url_str, "://")+3, sizeof(hostname));
