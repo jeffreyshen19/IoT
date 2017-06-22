@@ -176,7 +176,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
   read(client_socket_fd, buffer, 255);*/
 
   //Prepare SSL connection
-  sslServer = create_socket(dest_url, outbio, server, argv[2]);
+  sslServer = create_socket(dest_url, outbio, argv[1], argv[2]);
   SSL_set_fd(ssl, sslServer);
 
   while(1){
@@ -214,7 +214,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
 
   //Free all connections.
   SSL_free(ssl);
-  close(server);
+  close(sslServer);
   X509_free(cert);
   SSL_CTX_free(ctx);
 
@@ -232,7 +232,7 @@ int create_socket(char url_str[], BIO *out, char* hostname, char* portnum) {
   if(url_str[strlen(url_str)] == '/')
     url_str[strlen(url_str)] = '\0';
 
-  port = atoi(argv[2]);	
+  port = atoi(portnum);	
 	
   strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
 
