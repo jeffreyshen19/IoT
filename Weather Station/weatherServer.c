@@ -8,7 +8,7 @@ The port number is passed as an argument */
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#define FILE_NAME "text.csv"
+#define FILE_NAME "text.txt"
 
 void error(const char *msg)
 {
