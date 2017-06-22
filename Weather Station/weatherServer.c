@@ -63,8 +63,12 @@ int main(int argc, char *argv[])
 	file_ptr = fopen(FILE_NAME, "w");
 
 
-
+	int counter = 0;
 	while (1) {
+		counter++;
+		if (counter == 10) {
+			fclose(file_ptr);
+		}
 		// clear the buffer
 		memset(buffer, 0, 256);
 		n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
@@ -87,7 +91,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	fclose(file_ptr);
 
 	close(client_socket_fd);
 	close(server_socket_fd);
