@@ -150,10 +150,10 @@ int main(int argc, char *argv[]){
     struct timeval tv;
     gettimeofday(&tv, NULL);
 
-    unsigned long long millis = (unsigned long long)(tv.tv_sec) * 1000 + (unsigned long long)(tv.tv_usec) / 1000;
+    unsigned long millis = (unsigned long)(tv.tv_sec) * 1000 + (unsigned long)(tv.tv_usec) / 1000;
 
     memset(buffer, 0 ,256);
-    sprintf(buffer, ",%.5f\n", thermometer_value);
+    sprintf(buffer, "%lu,%.5f\n", millis, thermometer_value);
     printf("%s", buffer);
     write(client_socket_fd,buffer,strlen(buffer));
     memset(buffer, 0, 256);
