@@ -259,7 +259,7 @@ int create_socket(char url_str[], BIO *out, char* hostname, char* portnum) {
 
   memset(&(dest_addr.sin_zero), '\0', 8);
 
-  tmp_ptr = inet_ntoa(dest_addr.sin_addr);
+  //tmp_ptr = inet_ntoa(dest_addr.sin_addr);
 
   //Try connecting here
   if ( connect(sockfd, (struct sockaddr *) &dest_addr,
