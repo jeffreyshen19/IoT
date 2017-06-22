@@ -7,6 +7,7 @@
 #include <sys/types.h> 
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <fcntl.h>
 
 void error(const char *msg)
 {
@@ -37,12 +38,16 @@ int main(int argc, char *argv[])
     
 	// setup socket
 	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	fcntl(server_socket_fd, F_SETFL, O_NONBLOCK);
+
 	if (server_socket_fd < 0) {	
 		error("ERROR opening socket");
 	}
     
     //setup socket1
     server_socket_fd1 = socket(AF_INET, SOCK_STREAM, 0);
+	fcntl(server_socket_fd1, F_SETFL, O_NONBLOCK);
+
     if (server_socket_fd1 < 0) {
         error("ERROR opening socket1");
     }
@@ -123,8 +128,17 @@ int main(int argc, char *argv[])
         printf("Here is the message from connection 0: %s\n",buffer);
         
         
-       
-    printf("msg txt = %s", msgTxt);
+        
+	    
+	 char message1[129];
+	 char message2[129];
+    strcpy(message1, "Other user says: ");
+    strcat(message1, buffer1);
+    strcat(message1, "\n");
+	    
+    strcpy(message2, "Other user says: ");
+    strcat(message2, buffer);
+    strcat(message2, "\n");
 
     // send user input to the server
 
@@ -132,12 +146,12 @@ int main(int argc, char *argv[])
 	    
 	    
         // send an acknowledgement back to the client saying that we received the message
-        n = write(client_socket_fd,buffer1,strlen(buffer1)); 
+        n = write(client_socket_fd,message1,strlen(message1)); 
         if (n < 0) {
             error("ERROR writing to socket");
         }
         
-        n1 = write(client_socket_fd1, buffer, strlen(buffer));
+        n1 = write(client_socket_fd1, message2, strlen(message2));
         if (n1 < 0) {
             error("ERROR writing to socket");
         }
