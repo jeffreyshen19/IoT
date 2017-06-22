@@ -1,10 +1,10 @@
 /* A simple server in the internet domain using TCP
-   The port number is passed as an argument */
+The port number is passed as an argument */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 	// setup socket
 	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-	if (server_socket_fd < 0) {	
+	if (server_socket_fd < 0) {
 		error("ERROR opening socket");
 	}
 
@@ -59,37 +59,37 @@ int main(int argc, char *argv[])
 		error("ERROR on accept");
 	}
 
-    FILE* file_ptr = fopen(FILE_NAME, "w");
-    file_ptr = fopen(FILE_NAME, "w");
+	FILE* file_ptr = fopen(FILE_NAME, "w");
+	file_ptr = fopen(FILE_NAME, "w");
 
-    
-    
-    while (1) {
-        // clear the buffer
-        memset(buffer, 0, 256);
-        n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
-        if (n < 0) {
-            error("ERROR reading from socket");
-        }
-        
-        // print the message to console
-        printf("Here is the message: %s\n",buffer);
-        printf("Sending weather data to the text file...\n");
-        
-        fprintf(file_ptr, "%s", buffer);
-        
-        
-        
-        // send an acknowledgement back to the client saying that we received the message
-        n = write(client_socket_fd, "I got your message", 18);
-        if (n < 0) {
-            error("ERROR writing to socket");
-        }
-    }
-    
-    fclose(file_ptr);
+
+
+	while (1) {
+		// clear the buffer
+		memset(buffer, 0, 256);
+		n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
+		if (n < 0) {
+			error("ERROR reading from socket");
+		}
+
+		// print the message to console
+		printf("Here is the message: %s\n",buffer);
+		printf("Sending weather data to the text file...\n");
+
+		fprintf(file_ptr, "%s", buffer);
+
+
+
+		// send an acknowledgement back to the client saying that we received the message
+		n = write(client_socket_fd, "I got your message", 18);
+		if (n < 0) {
+			error("ERROR writing to socket");
+		}
+	}
+
+	fclose(file_ptr);
 
 	close(client_socket_fd);
 	close(server_socket_fd);
-	return 0; 
+	return 0;
 }
