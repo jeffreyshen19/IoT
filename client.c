@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 		if (n < 0) {
 			error("ERROR reading from socket");
 		}
-		printf("\033[1m\033[37m[THEM]:\x1B[0m %s\n",buffer);
+		printf("\033[1m\033[37m[THEM]:\x1B[0m %s",buffer);
 		sleep(1);
 	}
 	// clean up the file descriptors
