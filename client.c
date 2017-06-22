@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	portno = atoi(argv[2]);
 	
 	// setup the socket
-	client_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+	client_socket_fd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
 	// check if the socket was created successfully. If it wasnt, display an error and exit
 	if(client_socket_fd < 0) {
 		error("ERROR opening socket");
