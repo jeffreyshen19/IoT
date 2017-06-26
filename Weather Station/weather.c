@@ -136,6 +136,7 @@ int main(int argc, char *argv[]){
 			stop = 0;
 		}
 		else if(strstr(buffer, shutdownCommand) != NULL){
+			printf("\033[1m\033[31m%s\x1b[0m\n","SHUTTING DOWN");
 			return 0;
 		}
 
