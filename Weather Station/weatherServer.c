@@ -92,21 +92,25 @@ int main(int argc, char *argv[])
 
 	printf("8\n");
 
+	int stop = 0;
+
 	while (keepRunning) {
 
 		// clear the buffer
 		memset(buffer, 0, 256);
-		n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
-		if (n < 0) {
-			error("ERROR reading from socket");
-		}
+		if(stop == 0){
+			n = read(client_socket_fd, buffer, 255); // read what the client sent to the server and store it in "buffer"
+			if (n < 0) {
+				error("ERROR reading from socket");
+			}
 
-		// print the message to console
-		printf("Here is the message: %s\n",buffer);
-		printf("Sending weather data to the text file...\n");
 
-		fprintf(file_ptr, "%s", buffer);
+			// print the message to console
+			printf("Here is the message: %s\n",buffer);
+			printf("Sending weather data to the text file...\n");
 
+			fprintf(file_ptr, "%s", buffer);
+	  }
 		/*
 		*
 		*/
@@ -114,6 +118,8 @@ int main(int argc, char *argv[])
 
 		struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 		char string[128];
+
+
 
 		if( poll(&mypoll, 1, 2000) ) //next step is making the timeout the time in the period
 		{
@@ -125,8 +131,11 @@ int main(int argc, char *argv[])
 			if (n < 0) {
 				error("ERROR writing to socket");
 			}
-			if (strcmp(string,"OFF") == 0) {
-				printf("off?\n");
+			if (strcmp(string,"STOP") == 0) {
+				stop = 1;
+			}
+			else if (strcmp(string,"START") == 0) {
+				stop = 0;
 			}
 		}
 		else
