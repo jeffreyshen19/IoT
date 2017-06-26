@@ -110,11 +110,12 @@ int main(int argc, char *argv[])
 		/*
 		*
 		*/
+		sleep(1);
 
 		struct pollfd mypoll = { STDIN_FILENO, POLLIN|POLLPRI };
 		char string[128];
 
-		if( poll(&mypoll, 1, 1000) ) //next step is making the timeout the time in the period
+		if( poll(&mypoll, 1, 2000) ) //next step is making the timeout the time in the period
 		{
 			scanf("%9s", string);
 			printf("Read string - %s\n", string);
