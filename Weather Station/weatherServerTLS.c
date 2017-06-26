@@ -62,6 +62,34 @@ void init_openssl()
 	OpenSSL_add_ssl_algorithms();
 }
 
+void Servlet(SSL* ssl)	/* Serve the connection -- threadable */
+{   char buf[1024];
+    char reply[1024];
+    int sd, bytes;
+    const char* HTMLecho="<html><body><pre>%s</pre></body></html>\n\n";
+
+    if ( SSL_accept(ssl) == FAIL )					/* do SSL-protocol accept */
+        ERR_print_errors_fp(stderr);
+    else
+    {
+        ShowCerts(ssl);								/* get any certificates */
+        bytes = SSL_read(ssl, buf, sizeof(buf));	/* get request */
+        if ( bytes > 0 )
+        {
+            buf[bytes] = 0;
+            printf("Client msg: \"%s\"\n", buf);
+            sprintf(reply, HTMLecho, buf);			/* construct reply */
+            SSL_write(ssl, reply, strlen(reply));	/* send reply */
+        }
+        else
+            ERR_print_errors_fp(stderr);
+    }
+    sd = SSL_get_fd(ssl);							/* get socket connection */
+    SSL_free(ssl);									/* release SSL state */
+    close(sd);										/* close connection */
+}
+
+
 void cleanup_openssl()
 {
 	printf("4\n");
@@ -162,6 +190,8 @@ int main(int argc, char *argv[])
 		ssl = SSL_new(ctx);
 		SSL_set_fd(ssl, client);
 		printf("waiting 3\n");
+		
+		Servlet(ssl);
 
 		if (SSL_accept(ssl) <= 0) {
 			ERR_print_errors_fp(stderr);
