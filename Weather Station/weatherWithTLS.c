@@ -98,7 +98,7 @@ int create_socket(char url_str[], BIO *out) {
 }
 
 int main(int argc, char *argv[]){
-  char           dest_url[] = argv[2];
+  char*           dest_url = argv[2];
   BIO              *certbio = NULL;
   BIO               *outbio = NULL;
   X509                *cert = NULL;
