@@ -45,7 +45,7 @@ int create_socket(char url_str[], BIO *out) {
   port = atoi(portnum);
 
 printf("6\n");
-  if ( (host = gethostbyname(hostname)) == NULL ) {
+  if ( (host = gethostbyname(url_str)) == NULL ) {
     BIO_printf(out, "Error: Cannot resolve hostname %s.\n",  hostname);
     abort();
   }
