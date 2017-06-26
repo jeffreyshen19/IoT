@@ -84,7 +84,7 @@ printf("6\n");
 }
 
 int main(int argc, char *argv[]){
-  char*           dest_url = argv[2];
+  char*           dest_url = argv[1];
   BIO              *certbio = NULL;
   BIO               *outbio = NULL;
   X509                *cert = NULL;
