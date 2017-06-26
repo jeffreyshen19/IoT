@@ -140,7 +140,7 @@ int main(int argc, char *argv[]){
 		}
 
 
-		printf("\x1b[34m%s\x1b[0m\n",buffer);
+		if(stop == 0) printf("\x1b[34m%s\x1b[0m\n",buffer);
 
 
 
