@@ -60,7 +60,7 @@ printf("6\n");
   dest_addr.sin_family=AF_INET;
   dest_addr.sin_port=htons(port);
   //dest_addr.sin_addr.s_addr = *(long*)(host->h_addr);
-  inet_aton(url_str, &myaddr.sin_addr.s_addr);
+  inet_aton(url_str, dest_addr.sin_addr.s_addr);
 
   printf("%lu\n", dest_addr.sin_addr.s_addr);
 
