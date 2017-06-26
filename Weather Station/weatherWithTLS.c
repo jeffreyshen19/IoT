@@ -39,32 +39,6 @@ int create_socket(char url_str[], BIO *out) {
   /* ---------------------------------------------------------- *
    * Remove the final / from url_str, if there is one           *
    * ---------------------------------------------------------- */
-  printf("1\n");
-  if(url_str[strlen(url_str)] == '/')
-    url_str[strlen(url_str)] = '\0';
-
-  /* ---------------------------------------------------------- *
-   * the first : ends the protocol string, i.e. http            *
-   * ---------------------------------------------------------- */
-   printf("2\n");
-  strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
-
-  /* ---------------------------------------------------------- *
-   * the hostname starts after the "://" part                   *
-   * ---------------------------------------------------------- */
-   printf("3\n");
-  strncpy(hostname, strstr(url_str, "://")+3, sizeof(hostname));
-
-  /* ---------------------------------------------------------- *
-   * if the hostname contains a colon :, we got a port number   *
-   * ---------------------------------------------------------- */
-   printf("4\n");
-  if(strchr(hostname, ':')) {
-    tmp_ptr = strchr(hostname, ':');
-    /* the last : starts the port number, if avail, i.e. 8443 */
-    strncpy(portnum, tmp_ptr+1,  sizeof(portnum));
-    *tmp_ptr = '\0';
-  }
 
   printf("5\n");
 
