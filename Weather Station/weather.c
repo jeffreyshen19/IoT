@@ -227,6 +227,7 @@ int main(int argc, char *argv[]){
   int light_value = 0;
 
 	int bytes;
+	char buffer[256];
 	memset(buffer, 0 ,256);
 	strcpy(buffer, "timestamp,temperature,light levels\n");
 	printf("%s", buffer);
