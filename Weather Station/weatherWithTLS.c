@@ -43,6 +43,7 @@ int create_socket(char url_str[], BIO *out) {
   printf("5\n");
 
   port = atoi(portnum);
+  printf("%d\n", port);
 
 printf("6\n");
   if ( (host = gethostbyname(url_str)) == NULL ) {
