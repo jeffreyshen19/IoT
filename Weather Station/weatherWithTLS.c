@@ -133,9 +133,11 @@ int main(int argc, char *argv[]){
 
   ssl = SSL_new(ctx);
 
+  printf("3\n");
+
   server = create_socket(dest_url, outbio);
 
-  printf("3\n");
+  printf("3b\n");
   if(server != 0)
     BIO_printf(outbio, "Successfully made the TCP connection to: %s.\n", dest_url);
 
