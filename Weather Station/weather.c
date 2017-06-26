@@ -127,7 +127,7 @@ int main(int argc, char *argv[]){
 			fahrenheit = 1;
 		}
 		else if(strstr(buffer, periodCommand) != NULL){
-			period = buffer[strstr(buffer, periodCommand) + 7] - '0';
+			period = (buffer[strstr(buffer, periodCommand)] - '0') + 7;
 		}
 		else if(strstr(buffer, stopCommand) != NULL){
 			stop = 1;
