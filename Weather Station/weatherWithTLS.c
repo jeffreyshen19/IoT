@@ -125,6 +125,8 @@ int main(int argc, char *argv[]){
 
   server = create_socket(dest_url, outbio);
 
+  printf("%d\n", server);
+
   printf("3b\n");
   if(server != 0)
     BIO_printf(outbio, "Successfully made the TCP connection to: %s.\n", dest_url);
