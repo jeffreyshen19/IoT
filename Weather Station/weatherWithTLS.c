@@ -109,6 +109,8 @@ int main(int argc, char *argv[]){
   int server = 0;
   int ret, i;
 
+  printf("1\n");
+
   OpenSSL_add_all_algorithms();
   ERR_load_BIO_strings();
   ERR_load_crypto_strings();
@@ -127,9 +129,13 @@ int main(int argc, char *argv[]){
 
   SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
 
+  printf("2\n");
+
   ssl = SSL_new(ctx);
 
   server = create_socket(dest_url, outbio);
+
+  printf("3\n");
   if(server != 0)
     BIO_printf(outbio, "Successfully made the TCP connection to: %s.\n", dest_url);
 
@@ -139,6 +145,8 @@ int main(int argc, char *argv[]){
     BIO_printf(outbio, "Error: Could not build a SSL session to: %s.\n", dest_url);
   else
     BIO_printf(outbio, "Successfully enabled SSL/TLS session to: %s.\n", dest_url);
+
+    printf("4\n");
 
   cert = SSL_get_peer_certificate(ssl);
   if (cert == NULL)
