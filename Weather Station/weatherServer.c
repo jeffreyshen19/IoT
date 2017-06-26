@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
 {
 	signal(SIGINT, intHandler);
 	
+	printf("1\n");
+	
 	int server_socket_fd, client_socket_fd, portno;
 	socklen_t clilen;
 	char buffer[256];
@@ -38,12 +40,16 @@ int main(int argc, char *argv[])
 		fprintf(stderr,"ERROR, no port provided\n");
 		exit(1);
 	}
+	
+	printf("2\n");
 
 	// setup socket
 	server_socket_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (server_socket_fd < 0) {
 		error("ERROR opening socket");
 	}
+	
+	printf("3\n");
 
 	// setup server information
 	memset((char *) &serv_addr, 0, sizeof(serv_addr));
@@ -52,25 +58,35 @@ int main(int argc, char *argv[])
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 	serv_addr.sin_port = htons(portno);
 
+	printf("4\n");
+	
 	// bind the socket to an address
 	if (bind(server_socket_fd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
 		error("ERROR on binding");
 	}
+	
+	printf("5\n");
 
 	// listen for incoming connections
 	// accept at most 5 connections before refusing them
 	listen(server_socket_fd, 5);
 	clilen = sizeof(cli_addr);
 
+	printf("6\n");
+	
 	// block until there is a new connection. When one is received, accept it
 	client_socket_fd = accept(server_socket_fd, (struct sockaddr *) &cli_addr, &clilen);
 	if (client_socket_fd < 0) {
 		error("ERROR on accept");
 	}
+	
+	printf("7\n");
 
 	FILE* file_ptr = fopen(FILE_NAME, "w");
 	file_ptr = fopen(FILE_NAME, "w");
 
+	printf("8\n");
+	
 	while (keepRunning) {
 
 		// clear the buffer
