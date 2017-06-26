@@ -18,25 +18,30 @@ The port number is passed as an argument */
 
 void error(const char *msg)
 {
+	printf("9\n");
 	perror(msg);
 	exit(1);
 }
 
 int create_socket(int port)
 {
+	printf("5\n");
 	int s;
 	struct sockaddr_in addr;
 
+	printf("6\n");
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
+	printf("7\n");
 	s = socket(AF_INET, SOCK_STREAM, 0);
 	if (s < 0) {
 		perror("Unable to create socket");
 		exit(EXIT_FAILURE);
 	}
 
+	printf("8\n");
 	if (bind(s, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
 		perror("Unable to bind");
 		exit(EXIT_FAILURE);
@@ -52,17 +57,20 @@ int create_socket(int port)
 
 void init_openssl()
 {
+	printf("2\n");
 	SSL_load_error_strings();
 	OpenSSL_add_ssl_algorithms();
 }
 
 void cleanup_openssl()
 {
+	printf("4\n");
 	EVP_cleanup();
 }
 
 SSL_CTX *create_context()
 {
+	printf("3\n");
 	const SSL_METHOD *method;
 	SSL_CTX *ctx;
 
@@ -80,7 +88,6 @@ SSL_CTX *create_context()
 
 void configure_context(SSL_CTX *ctx)
 {
-	SSL_CTX_set_ecdh_auto(ctx, 1);
 
 	/* Set the key and cert */
 	if (SSL_CTX_use_certificate_file(ctx, "cert.pem", SSL_FILETYPE_PEM) <= 0) {
@@ -104,7 +111,7 @@ int main(int argc, char *argv[])
 {
 	signal(SIGINT, intHandler);
 
-	printf("1\n");
+	printf("10\n");
 
 	int server_socket_fd, client_socket_fd, portno;
 	socklen_t clilen;
@@ -112,26 +119,31 @@ int main(int argc, char *argv[])
 	struct sockaddr_in serv_addr, cli_addr;
 	int n;
 
+	printf("11\n");
 	//
+	int sock;
 	SSL_CTX *ctx;
 	init_openssl();
 	ctx = create_context();
-
+	printf("12\n");
 	configure_context(ctx);
 
 	sock = create_socket(4433);
-
+	printf("13\n");
 	/* Handle connections */
 
 	int stop = 0;
 	int off = 0;
 
-
+	printf("14\n");
 	struct sockaddr_in addr;
 	uint len = sizeof(addr);
 	SSL *ssl;
 	const char reply[] = "test\n";
-
+	
+	FILE* file_ptr = fopen(FILE_NAME, "w");
+	file_ptr = fopen(FILE_NAME, "w");
+	printf("15\n");
 
 	while (keepRunning && (off==0)) {
 
