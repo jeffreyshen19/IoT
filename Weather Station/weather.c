@@ -25,65 +25,6 @@ void error(const char *msg){
 	exit(0);
 }
 
-void reverse(char *str, int len)
-{
-    int i=0, j=len-1, temp;
-    while (i<j)
-    {
-        temp = str[i];
-        str[i] = str[j];
-        str[j] = temp;
-        i++; j--;
-    }
-}
-
- // Converts a given integer x to string str[].  d is the number
- // of digits required in output. If d is more than the number
- // of digits in x, then 0s are added at the beginning.
-int intToStr(int x, char str[], int d)
-{
-    int i = 0;
-    while (x)
-    {
-        str[i++] = (x%10) + '0';
-        x = x/10;
-    }
-
-    // If number of digits required is more, then
-    // add 0s at the beginning
-    while (i < d)
-        str[i++] = '0';
-
-    reverse(str, i);
-    str[i] = '\0';
-    return i;
-}
-
-void ftoa(float n, char *res, int afterpoint)
-{
-    // Extract integer part
-    int ipart = (int)n;
-
-    // Extract floating part
-    float fpart = n - (float)ipart;
-
-    // convert integer part to string
-    int i = intToStr(ipart, res, 0);
-
-    // check for display option after point
-    if (afterpoint != 0)
-    {
-        res[i] = '.';  // add dot
-
-        // Get the value of fraction part upto given no.
-        // of points after dot. The third parameter is needed
-        // to handle cases like 233.007
-        fpart = fpart * pow(10, afterpoint);
-
-        intToStr((int)fpart, res + i + 1, afterpoint);
-    }
-}
-
 int main(int argc, char *argv[]){
   /*
   	INITIALIZE SSL
@@ -114,8 +55,8 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
   /*
     SOCKET STUFF
   */
-  int client_socket_fd, portno, n;
-	struct sockaddr_in serv_addr;
+  //int client_socket_fd, portno, n;
+	//struct sockaddr_in serv_addr;
 	struct hostent *server;
 	char buffer[256];
 
@@ -176,7 +117,7 @@ SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
   read(client_socket_fd, buffer, 255);*/
 
   //Prepare SSL connection
-  sslServer = create_socket(dest_url, outbio, argv[1], argv[2]);
+  sslServer = create_socket(argv[1], outbio, argv[1], argv[2]);
   SSL_set_fd(ssl, sslServer);
 
   while(1){
@@ -232,18 +173,11 @@ int create_socket(char url_str[], BIO *out, char* hostname, char* portnum) {
   if(url_str[strlen(url_str)] == '/')
     url_str[strlen(url_str)] = '\0';
 
-  port = atoi(portnum);	
-	
+  port = atoi(portnum);
+
   strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
 
   strncpy(hostname, strstr(url_str, "://")+3, sizeof(hostname));
-
-  if(strchr(hostname, ':')) {
-    tmp_ptr = strchr(hostname, ':');
-    /* the last : starts the port number, if avail, i.e. 8443 */
-    strncpy(portnum, tmp_ptr+1,  sizeof(portnum));
-    *tmp_ptr = '\0';
-  }
 
   if ( (host = gethostbyname(hostname)) == NULL ) {
     BIO_printf(out, "Error: Cannot resolve hostname %s.\n",  hostname);
