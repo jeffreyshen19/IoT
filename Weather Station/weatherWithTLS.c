@@ -131,7 +131,10 @@ int main(int argc, char *argv[]){
   if(server != 0)
     BIO_printf(outbio, "Successfully made the TCP connection to: %s.\n", dest_url);
 
+    printf("3c\n");
   SSL_set_fd(ssl, server);
+
+printf("3d\n");
 
   if ( SSL_connect(ssl) != 1 )
     BIO_printf(outbio, "Error: Could not build a SSL session to: %s.\n", dest_url);
