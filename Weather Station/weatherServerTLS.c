@@ -68,7 +68,7 @@ void Servlet(SSL* ssl)	/* Serve the connection -- threadable */
     int sd, bytes;
     const char* HTMLecho="<html><body><pre>%s</pre></body></html>\n\n";
 
-    if ( SSL_accept(ssl) == FAIL )					/* do SSL-protocol accept */
+    if ( SSL_accept(ssl) == -1 )					/* do SSL-protocol accept */
         ERR_print_errors_fp(stderr);
     else
     {
