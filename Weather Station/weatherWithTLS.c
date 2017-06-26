@@ -39,22 +39,26 @@ int create_socket(char url_str[], BIO *out) {
   /* ---------------------------------------------------------- *
    * Remove the final / from url_str, if there is one           *
    * ---------------------------------------------------------- */
+  printf("1\n");
   if(url_str[strlen(url_str)] == '/')
     url_str[strlen(url_str)] = '\0';
 
   /* ---------------------------------------------------------- *
    * the first : ends the protocol string, i.e. http            *
    * ---------------------------------------------------------- */
+   printf("2\n");
   strncpy(proto, url_str, (strchr(url_str, ':')-url_str));
 
   /* ---------------------------------------------------------- *
    * the hostname starts after the "://" part                   *
    * ---------------------------------------------------------- */
+   printf("3\n");
   strncpy(hostname, strstr(url_str, "://")+3, sizeof(hostname));
 
   /* ---------------------------------------------------------- *
    * if the hostname contains a colon :, we got a port number   *
    * ---------------------------------------------------------- */
+   printf("4\n");
   if(strchr(hostname, ':')) {
     tmp_ptr = strchr(hostname, ':');
     /* the last : starts the port number, if avail, i.e. 8443 */
@@ -62,8 +66,11 @@ int create_socket(char url_str[], BIO *out) {
     *tmp_ptr = '\0';
   }
 
+  printf("5\n");
+
   port = atoi(portnum);
 
+printf("6\n");
   if ( (host = gethostbyname(hostname)) == NULL ) {
     BIO_printf(out, "Error: Cannot resolve hostname %s.\n",  hostname);
     abort();
@@ -72,6 +79,7 @@ int create_socket(char url_str[], BIO *out) {
   /* ---------------------------------------------------------- *
    * create the basic TCP socket                                *
    * ---------------------------------------------------------- */
+   printf("7\n");
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
   dest_addr.sin_family=AF_INET;
@@ -81,6 +89,7 @@ int create_socket(char url_str[], BIO *out) {
   /* ---------------------------------------------------------- *
    * Zeroing the rest of the struct                             *
    * ---------------------------------------------------------- */
+   printf("8\n");
   memset(&(dest_addr.sin_zero), '\0', 8);
 
   tmp_ptr = inet_ntoa(dest_addr.sin_addr);
@@ -88,6 +97,7 @@ int create_socket(char url_str[], BIO *out) {
   /* ---------------------------------------------------------- *
    * Try to make the host connect here                          *
    * ---------------------------------------------------------- */
+   printf("9\n");
   if ( connect(sockfd, (struct sockaddr *) &dest_addr,
                               sizeof(struct sockaddr)) == -1 ) {
     BIO_printf(out, "Error: Cannot connect to host %s [%s] on port %d.\n",
