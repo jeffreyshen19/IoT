@@ -93,8 +93,9 @@ int main(int argc, char *argv[])
 	printf("8\n");
 
 	int stop = 0;
+	int off = 0;
 
-	while (keepRunning) {
+	while (keepRunning && (off==0)) {
 
 		// clear the buffer
 		memset(buffer, 0, 256);
@@ -136,6 +137,10 @@ int main(int argc, char *argv[])
 			}
 			else if (strcmp(string,"START") == 0) {
 				stop = 0;
+			}
+			else if (strcmp(string,"OFF") == 0) {
+				off = 1;
+				printf("turning off\n");
 			}
 		}
 		else
