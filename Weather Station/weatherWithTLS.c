@@ -26,7 +26,7 @@ void error(const char *msg){
 	exit(0);
 }
 
-int create_socket(char url_str[], BIO *out) {
+int create_socket(char *url_str, BIO *out) {
   int sockfd;
   char hostname[256] = "";
   char    portnum[4] = "5000";
