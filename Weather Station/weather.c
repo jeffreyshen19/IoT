@@ -65,6 +65,19 @@ int main(int argc, char *argv[]){
   */
   int R0 = 100000;
   int B = 4275;
+
+	//Config values
+  int fahrenheit = 1;
+	int period = 1;
+	int stop = 0;
+
+	char *scaleCommandCelsius = "SCALE=C";
+	char *scaleCommandFahrenheit = "SCALE=F";
+	char *periodCommand = "PERIOD=";
+	char *stopCommand = "STOP";
+	char *startCommand = "START";
+	char *shutdownCommand = "OFF";
+
   mraa_init();
   mraa_aio_context thermometer, lightsensor;;
   float R;
@@ -81,30 +94,58 @@ int main(int argc, char *argv[]){
   read(client_socket_fd, buffer, 255);
 
   while(1){
-    R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
-    R = R0 * R;
-    thermometer_value = 1.0/(log(R/R0)/B+1/298.15)-263.15;
+		if(stop == 0){
+			R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
+	    R = R0 * R;
+	    thermometer_value = 1.0/(log(R/R0)/B+1/298.15)-263.15;
+			if(fahrenheit) thermometer_value = 9 * thermometer_value / 5 + 32;
 
-    /*
-      Transmit data
-    */
+	    /*
+	      Transmit data
+	    */
 
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
+	    struct timeval tv;
+	    gettimeofday(&tv, NULL);
 
-    unsigned long millis = (unsigned long)(tv.tv_sec) * 1000 + (unsigned long)(tv.tv_usec) / 1000;
+	    unsigned long millis = (unsigned long)(tv.tv_sec) * 1000 + (unsigned long)(tv.tv_usec) / 1000;
 
-    light_value = mraa_aio_read(lightsensor);
+	    light_value = mraa_aio_read(lightsensor);
 
-    memset(buffer, 0 ,256);
-    sprintf(buffer, "%lu,%.5f,%d\n", millis, thermometer_value, light_value);
-    printf("%s", buffer);
-    write(client_socket_fd,buffer,strlen(buffer));
-    memset(buffer, 0, 256);
-    read(client_socket_fd, buffer, 255);
-    printf("\x1b[34m%s\x1b[0m\n",buffer);
+			memset(buffer, 0 ,256);
+			sprintf(buffer, "%lu,%.5f,%d\n", millis, thermometer_value, light_value);
+			printf("%s", buffer);
+			write(client_socket_fd,buffer,strlen(buffer));
+		}
 
-    sleep(1);
+		memset(buffer, 0, 256);
+		read(client_socket_fd, buffer, 255);
+
+		if(strstr(buffer, scaleCommandCelsius) != NULL){
+			fahrenheit = 0;
+		}
+		else if(strstr(buffer, scaleCommandFahrenheit) != NULL){
+			fahrenheit = 1;
+		}
+		else if(strstr(buffer, periodCommand) != NULL){
+			period = buffer[ststr(buffer, periodCommand) + 7] - '0';
+		}
+		else if(strstr(buffer, stopCommand) != NULL){
+			stop = 1;
+		}
+		else if(strstr(buffer, startCommand) != NULL){
+			stop = 0;
+		}
+		else if(strstr(buffer, shutdownCommand) != NULL){
+			return 0;
+		}
+
+
+		printf("\x1b[34m%s\x1b[0m\n",buffer);
+
+
+
+
+    sleep(period);
     //usleep(100000);
   }
 
