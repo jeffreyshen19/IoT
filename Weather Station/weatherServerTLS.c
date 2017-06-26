@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 	int n;
 
 	//
+	int sock;
 	SSL_CTX *ctx;
 	init_openssl();
 	ctx = create_context();
