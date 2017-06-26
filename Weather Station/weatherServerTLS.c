@@ -80,7 +80,6 @@ SSL_CTX *create_context()
 
 void configure_context(SSL_CTX *ctx)
 {
-	SSL_CTX_ctrl(ctx, SSL_CTRL_SET_ECDH_AUTO, 1, NULL)
 
 	/* Set the key and cert */
 	if (SSL_CTX_use_certificate_file(ctx, "cert.pem", SSL_FILETYPE_PEM) <= 0) {
