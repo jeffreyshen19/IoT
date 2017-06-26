@@ -29,7 +29,7 @@ void error(const char *msg){
 int create_socket(char url_str[], BIO *out) {
   int sockfd;
   char hostname[256] = "";
-  char    portnum[6] = "5000";
+  char    portnum[4] = "5000";
   char      proto[6] = "";
   char      *tmp_ptr = NULL;
   int           port;
