@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
 	printf("15\n");
 
 	while (keepRunning && (off==0)) {
-
+		printf("waiting 1\n");
 
 		/*
 		*
@@ -157,9 +157,11 @@ int main(int argc, char *argv[])
 			perror("Unable to accept");
 			exit(EXIT_FAILURE);
 		}
+		printf("waiting 2\n");
 
 		ssl = SSL_new(ctx);
 		SSL_set_fd(ssl, client);
+		printf("waiting 3\n");
 
 		if (SSL_accept(ssl) <= 0) {
 			ERR_print_errors_fp(stderr);
