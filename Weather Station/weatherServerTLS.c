@@ -132,6 +132,9 @@ int main(int argc, char *argv[])
 	uint len = sizeof(addr);
 	SSL *ssl;
 	const char reply[] = "test\n";
+	
+	FILE* file_ptr = fopen(FILE_NAME, "w");
+	file_ptr = fopen(FILE_NAME, "w");
 
 
 	while (keepRunning && (off==0)) {
