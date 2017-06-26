@@ -17,89 +17,6 @@ void error(const char *msg){
 }
 
 int main(int argc, char *argv[]){
-  printf("1\n");
-	/*
-		SSL connection
-	*/
-	char           dest_url[] = "172.20.10.13";
-  BIO              *certbio = NULL;
-  BIO               *outbio = NULL;
-  X509                *cert = NULL;
-  X509_NAME       *certname = NULL;
-  const SSL_METHOD *method;
-  SSL_CTX *ctx;
-  SSL *ssl;
-  int server = 0;
-  int ret, i;
-
-  printf("2\n");
-
-  OpenSSL_add_all_algorithms();
-  ERR_load_BIO_strings();
-  ERR_load_crypto_strings();
-  SSL_load_error_strings();
-
-  printf("3\n");
-
-  certbio = BIO_new(BIO_s_file());
-  outbio  = BIO_new_fp(stdout, BIO_NOCLOSE);
-
-  if(SSL_library_init() < 0)
-    BIO_printf(outbio, "Could not initialize the OpenSSL library !\n");
-
-  method = SSLv23_client_method();
-
-  if ( (ctx = SSL_CTX_new(method)) == NULL)
-    BIO_printf(outbio, "Unable to create a new SSL context structure.\n");
-
-  SSL_CTX_set_options(ctx, SSL_OP_NO_SSLv2);
-
-  printf("4\n");
-
-  ssl = SSL_new(ctx);
-
-  server = create_socket(dest_url, outbio);
-  printf("5\n");
-  if(server != 0)
-    BIO_printf(outbio, "Successfully made the TCP connection to: %s.\n", dest_url);
-
-  /* ---------------------------------------------------------- *
-   * Attach the SSL session to the socket descriptor            *
-   * ---------------------------------------------------------- */
-  SSL_set_fd(ssl, server);
-
-  /* ---------------------------------------------------------- *
-   * Try to SSL-connect here, returns 1 for success             *
-   * ---------------------------------------------------------- */
-  if ( SSL_connect(ssl) != 1 )
-    BIO_printf(outbio, "Error: Could not build a SSL session to: %s.\n", dest_url);
-  else
-    BIO_printf(outbio, "Successfully enabled SSL/TLS session to: %s.\n", dest_url);
-
-  printf("6\n");
-
-  /* ---------------------------------------------------------- *
-   * Get the remote certificate into the X509 structure         *
-   * ---------------------------------------------------------- */
-  cert = SSL_get_peer_certificate(ssl);
-  if (cert == NULL)
-    BIO_printf(outbio, "Error: Could not get a certificate from: %s.\n", dest_url);
-  else
-    BIO_printf(outbio, "Retrieved the server's certificate from: %s.\n", dest_url);
-
-  /* ---------------------------------------------------------- *
-   * extract various certificate information                    *
-   * -----------------------------------------------------------*/
-  certname = X509_NAME_new();
-  certname = X509_get_subject_name(cert);
-
-  /* ---------------------------------------------------------- *
-   * display the cert subject here                              *
-   * -----------------------------------------------------------*/
-  BIO_printf(outbio, "Displaying the certificate subject data:\n");
-  X509_NAME_print_ex(outbio, certname, 0, 0);
-  BIO_printf(outbio, "\n");
-
   /*
     SOCKET STUFF
   */
@@ -162,8 +79,6 @@ int main(int argc, char *argv[]){
   write(client_socket_fd,buffer,strlen(buffer));
   memset(buffer, 0, 256);
   read(client_socket_fd, buffer, 255);
-
-  printf("7\n");
 
   while(1){
     R = 1023.0 /((float) mraa_aio_read(thermometer)) -1.0;
