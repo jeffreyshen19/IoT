@@ -6,7 +6,7 @@ public class Client {
   public static void main(String[] args) throws Exception {
     try {
       SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-      SSLSocket socket = (SSLSocket) factory.createSocket(args[0], args[1]);
+      SSLSocket socket = (SSLSocket) factory.createSocket(args[0], Integer.parseInt(args[1]));
 
       socket.startHandshake();
 
