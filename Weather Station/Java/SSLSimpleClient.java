@@ -4,6 +4,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
 import mraa.Aio;
+import mraa.Dir;
+import mraa.Gpio;
+import mraa.IntelEdison;
+import mraa.mraa;
+import mraa.Platform;
+import mraa.Result;
 
 import javax.net.ssl.SSLSocket;
 
