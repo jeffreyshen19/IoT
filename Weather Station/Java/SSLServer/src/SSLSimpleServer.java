@@ -40,11 +40,16 @@ public class SSLSimpleServer extends Thread {
           System.out.println(data + " is echoed");
         }
 
-        BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
-        Thread.sleep(sleepTime);
+        BufferedReader msgTaker = new BufferedReader(System.in);
+
+        try {
+          Thread.sleep(sleepTime);
+        } catch (Exception e) {
+          System.out.println("couldnt sleep");
+        }
         String message = msgTaker.readLine();
         if (message.equals("")) {
-          pw.println(message);
+          pw.println(data);
         }
         else {
           if (message.equals("STOP")) {
