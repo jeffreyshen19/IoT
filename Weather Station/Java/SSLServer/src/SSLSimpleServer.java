@@ -29,7 +29,7 @@ public class SSLSimpleServer extends Thread {
   public void run() {
     boolean receiving = true, running = true;
     ArrayList<String> messages = new ArrayList<>();
-    int sleepTime = 1000;
+    int sleepTime = 0;
     try {
       while (running) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -48,15 +48,18 @@ public class SSLSimpleServer extends Thread {
           System.out.println("couldnt sleep");
         }
 
-        long end=System.currentTimeMillis()+1500;
+        long end=System.currentTimeMillis()+100;
         String message = "";
         while((System.currentTimeMillis()<end)) {
           if (msgTaker.ready())
             message += msgTaker.readLine();
         }
-        System.out.println("The message is " + message);
-
-
+        if (message.equals("")) {
+          System.out.println("No input");
+        }
+        else {
+          System.out.println("The message is " + message);
+        }
         if (message.equals("")) {
           pw.println(message);
         }
@@ -71,20 +74,15 @@ public class SSLSimpleServer extends Thread {
             receiving = true;
           }
           else if (message.contains("PERIOD=")) {
-            sleepTime = Integer.parseInt(message.substring(message.length() - 1))*1000;
+            sleepTime = Integer.parseInt(message.substring(message.indexOf("=") + 1))*1000;
           }
           messages.add(message);
           pw.println(message);
         }
         pw.flush();
-
-
       }
+
       sock.close();
-
-
-
-
 
       try{
         PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
@@ -95,13 +93,9 @@ public class SSLSimpleServer extends Thread {
       } catch (IOException e) {
         // do something
       }
-
-
-    System.out.println("got here now what???");
-
-
     } catch (IOException ioe) {
       // Client disconnected
     }
+    System.out.println("got here");
   }
 }
