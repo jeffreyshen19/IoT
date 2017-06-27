@@ -48,10 +48,10 @@ public class SSLSimpleServer extends Thread {
           System.out.println("couldnt sleep");
         }
 
-        long end=System.currentTimeMillis()+3000;
+        long end=System.currentTimeMillis()+1500;
         String message = "";
         while((System.currentTimeMillis()<end)) {
-          if (msgTaker.ready())
+          if (bufferedReader.available() > 0)
             message += msgTaker.readLine();
         }
         System.out.println("The message is " + message);
