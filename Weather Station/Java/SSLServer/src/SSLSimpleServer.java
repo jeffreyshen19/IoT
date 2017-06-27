@@ -36,6 +36,7 @@ public class SSLSimpleServer extends Thread {
         pw.println(data);
         pw.flush();
       }
+      pw.close();
       sock.close();
 
 
