@@ -27,18 +27,55 @@ public class SSLSimpleServer extends Thread {
   }
 
   public void run() {
+    boolean receiving = true, running = true;
     ArrayList<String> messages = new ArrayList<>();
+    int sleepTime = 3000;
     try {
-      for (int i=0; i < 10; i++) {
+      while (running) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         PrintWriter pw = new PrintWriter(sock.getOutputStream());
-        String data = br.readLine();
-        messages.add(data);
-        System.out.println(data + " is echoed");
-        pw.println(data);
+        if (receiving) {
+          String data = br.readLine();
+          messages.add(data);
+          System.out.println(data + " is echoed");
+        }
+
+        BufferedReader msgTaker = new BufferedReader(System.in);
+        Thread.sleep(sleepTime);
+        String message = msgTaker.readLine();
+        if (message.equals("")) {
+          pw.println(data);
+        }
+        else {
+          if (message.equals("STOP")) {
+            receiving = false;
+          }
+          else if (message.equals("OFF")) {
+            running = false;
+          }
+          else if (message.equals("START")) {
+            receiving = true;
+          }
+          else if (message.contains("PERIOD=")) {
+            sleepTime = Integer.parseInt(message.substring(message.length() - 1))*1000;
+          }
+          messages.add(message);
+          pw.println(message);
+        }
         pw.flush();
+
+
       }
+
+
+
+
+
       sock.close();
+
+
+
+
 
       try{
         PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
