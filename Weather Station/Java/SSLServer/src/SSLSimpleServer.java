@@ -74,7 +74,7 @@ public class SSLSimpleServer extends Thread {
             receiving = true;
           }
           else if (message.contains("PERIOD=")) {
-            sleepTime = Integer.parseInt(message.substring(message.indexOf("=")))*1000;
+            sleepTime = Integer.parseInt(message.substring(message.indexOf("=") + 1))*1000;
           }
           messages.add(message);
           pw.println(message);
