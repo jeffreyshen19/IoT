@@ -17,7 +17,6 @@ import java.util.Calendar;
 public class SSLSimpleClient {
 
   static {
-	  System.out.println("testing");
     try {
       System.loadLibrary("mraajava");
     } catch (UnsatisfiedLinkError e) {
