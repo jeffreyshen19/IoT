@@ -29,7 +29,7 @@ public class SSLSimpleServer extends Thread {
   public void run() {
     boolean receiving = true, running = true;
     ArrayList<String> messages = new ArrayList<>();
-    int sleepTime = 3000;
+    int sleepTime = 1000;
     try {
       while (running) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -77,20 +77,8 @@ public class SSLSimpleServer extends Thread {
           pw.println(message);
         }
         pw.flush();
-
-
       }
-
-
-
-
-
       sock.close();
-
-
-
-
-
       try{
         PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
         for (int i = 0; i < messages.size(); i++){
@@ -100,11 +88,6 @@ public class SSLSimpleServer extends Thread {
       } catch (IOException e) {
         // do something
       }
-
-
-
-
-
     } catch (IOException ioe) {
       // Client disconnected
     }
