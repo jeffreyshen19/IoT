@@ -12,7 +12,7 @@ public class SSLSimpleClient {
         public static void main(String[] args) {
 
                 SSLSocket sslSocket = null;
-                SSLClientSocket mSSLClientSocket = new SSLClientSocket("localhost", 9096);
+                SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
                 if(mSSLClientSocket.checkAndAddCertificates()) {
                         sslSocket = mSSLClientSocket.getSSLSocket();
                 }
