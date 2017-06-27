@@ -50,7 +50,7 @@ void main()
  
     SSL_CTX         *ctx;
         SSL            *ssl;
-       SSL_METHOD      *meth;
+       SSL_METHOD      meth;
 
 
         X509            *client_cert = NULL;
