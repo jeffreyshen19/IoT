@@ -47,7 +47,16 @@ public class SSLSimpleServer extends Thread {
         } catch (Exception e) {
           System.out.println("couldnt sleep");
         }
-        String message = msgTaker.readLine();
+
+        long end=System.currentTimeMillis()+1500;
+        String message = "";
+        while((System.currentTimeMillis()<end)) {
+          if (bufferedReader.available() > 0)
+            message += msgTaker.readLine();
+        }
+        System.out.println("The message is " + message);
+
+
         if (message.equals("")) {
           pw.println(message);
         }
