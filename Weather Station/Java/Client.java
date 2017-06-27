@@ -1,39 +1,37 @@
-import java.net.*;
-import java.io.*;
-import javax.net.ssl.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.UnknownHostException;
 
-public class Client {
-  public static void main(String[] args) throws Exception {
-    try {
-      SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-      SSLSocket socket = (SSLSocket) factory.createSocket(args[0], Integer.parseInt(args[1]));
+import javax.net.ssl.SSLSocket;
 
-      socket.startHandshake();
 
-      PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
+public class SSLSimpleClient {
 
-      out.println("GET / HTTP/1.0");
-      out.println();
-      out.flush();
+        public static void main(String[] args) {
 
-      if (out.checkError()) System.out.println("SSLSocketClient:  java.io.PrintWriter error");
+                SSLSocket sslSocket = null;
+                SSLClientSocket mSSLClientSocket = new SSLClientSocket("localhost", 9096);
+                if(mSSLClientSocket.checkAndAddCertificates()) {
+                        sslSocket = mSSLClientSocket.getSSLSocket();
+                }
+                else {
+                        return;
+                }
 
-      /* read response */
-      BufferedReader in = new BufferedReader(
-      new InputStreamReader(
-      socket.getInputStream()));
+                try {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+                    PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
+                    pw.println("Simple Message Hi...");
+                    System.out.println("Simple Message Hi... was sent");
+                    pw.flush();
 
-      String inputLine;
-      while ((inputLine = in.readLine()) != null)
-      System.out.println(inputLine);
+                    System.out.println(br.readLine() + " was received");
+                    sslSocket.close();
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+        }
 
-      in.close();
-      out.close();
-      socket.close();
-
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
 }
