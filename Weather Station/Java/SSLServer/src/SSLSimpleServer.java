@@ -28,15 +28,15 @@ public class SSLSimpleServer extends Thread {
 
   public void run() {
     try {
-      for (int i = 0; i< 5; i++) {
-        BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        PrintWriter pw = new PrintWriter(sock.getOutputStream());
-        String data = br.readLine();
-  	    System.out.println(data + " is echoed");
-        pw.println(data);
-        pw.close();
 
-      }
+      BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+      PrintWriter pw = new PrintWriter(sock.getOutputStream());
+      String data = br.readLine();
+      System.out.println(data + " is echoed");
+      pw.println(data);
+      pw.close();
+
+
       sock.close();
 
 
