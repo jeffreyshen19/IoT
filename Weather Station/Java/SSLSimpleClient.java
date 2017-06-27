@@ -51,7 +51,8 @@ public class SSLSimpleClient {
 
       int R0 = 100000;
       int B = 4275;
-      int temperature, double R;
+      int temperature;
+      double R;
 
       Calendar cal = Calendar.getInstance();
       SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -84,7 +85,7 @@ public class SSLSimpleClient {
           else if(serverResponse.equals("SCALE=C")) fahrenheit = false;
         }
         else if(serverResponse.indexOf("PERIOD=") != -1){
-          period = (int) (1000 * Double.parseDouble("" + serverResponse.charAt(.indexOf("PERIOD=") + 7)));
+          period = (int) (1000 * Double.parseDouble("" + serverResponse.charAt(serverResponse.indexOf("PERIOD=") + 7)));
         }
         else if(serverResponse.equals("OFF")){
           System.out.println("\033[1m\033[31mSHUTTING DOWN\033[1m");
