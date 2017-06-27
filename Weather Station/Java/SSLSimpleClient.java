@@ -92,6 +92,7 @@ public class SSLSimpleClient {
         }
         else if(serverResponse.indexOf("PERIOD=") != -1){
           period = (int) (1000 * Double.parseDouble("" + serverResponse.charAt(serverResponse.indexOf("PERIOD=") + 7)));
+          System.out.println("\033[1m\033[34mChanging period to " + period + " ms\033[0m");
         }
         else if(serverResponse.equals("OFF")){
           System.out.println("\033[1m\033[31mSHUTTING DOWN\033[0m");
