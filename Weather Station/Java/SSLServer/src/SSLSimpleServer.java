@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+import java.util.ArrayList;
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
 
@@ -27,17 +27,28 @@ public class SSLSimpleServer extends Thread {
   }
 
   public void run() {
+    ArrayList<String> messages = new ArrayList<>();
     try {
-      for (int i = 0; i< 5; i++) {
+      for (int i=0; i < 10; i++) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
         PrintWriter pw = new PrintWriter(sock.getOutputStream());
         String data = br.readLine();
-  	    System.out.println(data + " is echoed");
+        messages.add(data);
+        System.out.println(data + " is echoed");
         pw.println(data);
-        pw.close();
-
+        pw.flush();
       }
       sock.close();
+
+      try{
+        PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
+        for (int i = 0; i < messages.size(); i++){
+          writer.println(messages.get(i));
+        }
+        writer.close();
+      } catch (IOException e) {
+        // do something
+      }
 
 
 

@@ -17,6 +17,7 @@ import java.util.Calendar;
 public class SSLSimpleClient {
 
   static {
+	  System.out.println("testing");
     try {
       System.loadLibrary("mraajava");
     } catch (UnsatisfiedLinkError e) {
@@ -76,7 +77,7 @@ public class SSLSimpleClient {
         }
 
         serverResponse = br.readLine().trim();
-      
+
         //Process commands
         if(serverResponse.indexOf("SCALE=") != -1){
           if(serverResponse.equals("SCALE=F")) fahrenheit = true;
