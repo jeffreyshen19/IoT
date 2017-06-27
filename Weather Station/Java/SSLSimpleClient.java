@@ -3,13 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
-import mraa.Aio;
-import mraa.Dir;
-import mraa.Gpio;
-import mraa.IntelEdison;
-import mraa.mraa;
-import mraa.Platform;
-import mraa.Result;
+import mraa.*;
 
 import javax.net.ssl.SSLSocket;
 
@@ -17,6 +11,7 @@ import javax.net.ssl.SSLSocket;
 public class SSLSimpleClient {
 
   static {
+	  System.out.println("testing");
     try {
       System.loadLibrary("mraajava");
     } catch (UnsatisfiedLinkError e) {

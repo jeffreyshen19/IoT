@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.UnknownHostException;
-import mraa.Aio;
+import mraa.*;
 
 import javax.net.ssl.SSLSocket;
 
@@ -11,6 +11,7 @@ import javax.net.ssl.SSLSocket;
 public class SSLSimpleClient {
 
   static {
+	  System.out.println("testing");
     try {
       System.loadLibrary("mraajava");
     } catch (UnsatisfiedLinkError e) {
@@ -39,7 +40,7 @@ public class SSLSimpleClient {
       System.out.println("Simple Message Hi... was sent");
       pw.flush();
 
-      Aio thermometer = new Aio(0);
+      Gpio thermometer = new Gpio(0);
 
       int R0 = 100000;
       int B = 4275;
@@ -58,7 +59,6 @@ public class SSLSimpleClient {
         Thread.sleep(1000);
       }
 
-      sslSocket.close();
 
     } catch (Exception e) {
       e.printStackTrace();
