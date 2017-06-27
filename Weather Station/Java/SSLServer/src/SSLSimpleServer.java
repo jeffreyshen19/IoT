@@ -35,8 +35,11 @@ public class SSLSimpleServer extends Thread {
         System.out.println(data + " is echoed");
         pw.println(data);
         pw.flush();
+        if (i == 9) {
+           pw.close();  
+        }
       }
-      pw.close();
+     
       sock.close();
 
 
