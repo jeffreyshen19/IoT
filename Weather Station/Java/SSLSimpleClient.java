@@ -43,7 +43,7 @@ public class SSLSimpleClient {
       BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
       PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
       pw.println("Initiating connection from the client");
-      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\\x1B[0m");
+      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
       pw.flush();
       br.readLine();
 
@@ -88,15 +88,15 @@ public class SSLSimpleClient {
           period = (int) (1000 * Double.parseDouble("" + serverResponse.charAt(serverResponse.indexOf("PERIOD=") + 7)));
         }
         else if(serverResponse.equals("OFF")){
-          System.out.println("\033[1m\033[31mSHUTTING DOWN\\x1B[0m");
+          System.out.println("\033[1m\033[31mSHUTTING DOWN\033[0m");
           break;
         }
         else if(serverResponse.equals("START")){
-          if(!running) System.out.println("\033[1m\033[32mStarted monitoring sensors\\x1B[0m");
+          if(!running) System.out.println("\033[1m\033[32mStarted monitoring sensors\033[0m");
           running = true;
         }
         else if(serverResponse.equals("STOP")){
-          if(running) System.out.println("\033[1m\033[31mStopped monitoring sensors\\x1B[0m");
+          if(running) System.out.println("\033[1m\033[31mStopped monitoring sensors\033[0m");
           running = false;
         }
 
