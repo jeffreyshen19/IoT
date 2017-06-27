@@ -51,7 +51,7 @@ public class SSLSimpleServer extends Thread {
         long end=System.currentTimeMillis()+3000;
         String message = "";
         while((System.currentTimeMillis()<end)) {
-          if (msgTaker.available() > 0)
+          if (msgTaker.ready())
             message += msgTaker.readLine();
         }
         System.out.println("The message is " + message);
