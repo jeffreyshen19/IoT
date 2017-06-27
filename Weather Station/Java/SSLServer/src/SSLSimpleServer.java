@@ -45,6 +45,7 @@ public class SSLSimpleServer extends Thread {
 
     } catch (IOException ioe) {
       // Client disconnected
+      System.out.println("client disconnected");
     }
   }
 }
