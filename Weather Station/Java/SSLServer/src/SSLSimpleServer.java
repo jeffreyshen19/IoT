@@ -42,7 +42,7 @@ public class SSLSimpleServer extends Thread {
 
       try{
         PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
-        for (int i = 0; i < data.size(); i++){
+        for (int i = 0; i < messages.size(); i++){
           writer.println(messages.get(i));
         }
         writer.close();
