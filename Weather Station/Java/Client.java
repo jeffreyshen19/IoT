@@ -7,12 +7,12 @@ import java.net.UnknownHostException;
 import javax.net.ssl.SSLSocket;
 
 
-public class SSLSimpleClient {
+public class Client {
 
         public static void main(String[] args) {
 
                 SSLSocket sslSocket = null;
-                SSLClientSocket mSSLClientSocket = new SSLClientSocket("localhost", 9096);
+                SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
                 if(mSSLClientSocket.checkAndAddCertificates()) {
                         sslSocket = mSSLClientSocket.getSSLSocket();
                 }
