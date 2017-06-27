@@ -28,15 +28,14 @@ public class SSLSimpleServer extends Thread {
 
   public void run() {
     try {
-
-      BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-      PrintWriter pw = new PrintWriter(sock.getOutputStream());
-      String data = br.readLine();
-      System.out.println(data + " is echoed");
-      pw.println(data);
-      pw.close();
-
-
+      for (int i=0; i < 10; i++) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        PrintWriter pw = new PrintWriter(sock.getOutputStream());
+        String data = br.readLine();
+        System.out.println(data + " is echoed");
+        pw.println(data);
+        pw.flush();
+      }
       sock.close();
 
 
@@ -45,7 +44,6 @@ public class SSLSimpleServer extends Thread {
 
     } catch (IOException ioe) {
       // Client disconnected
-      System.out.println("client disconnected");
     }
   }
 }
