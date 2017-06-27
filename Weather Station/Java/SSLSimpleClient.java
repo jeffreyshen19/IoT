@@ -81,8 +81,14 @@ public class SSLSimpleClient {
 
         //Process commands
         if(serverResponse.indexOf("SCALE=") != -1){
-          if(serverResponse.equals("SCALE=F")) fahrenheit = true;
-          else if(serverResponse.equals("SCALE=C")) fahrenheit = false;
+          if(serverResponse.equals("SCALE=F")) {
+            System.out.println("\033[1m\033[34mChanging temperature to degrees Fahrenheit\033[0m");
+            fahrenheit = true;
+          }
+          else if(serverResponse.equals("SCALE=C")) {
+            System.out.println("\033[1m\033[34mChanging temperature to degrees Celsius\033[0m");
+            fahrenheit = false;
+          }
         }
         else if(serverResponse.indexOf("PERIOD=") != -1){
           period = (int) (1000 * Double.parseDouble("" + serverResponse.charAt(serverResponse.indexOf("PERIOD=") + 7)));
