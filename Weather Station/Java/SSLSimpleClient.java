@@ -43,11 +43,11 @@ public class SSLSimpleClient {
 
       int R0 = 100000;
       int B = 4275;
-      
+
       while(true){
         int temperature = thermometer.readFloat();
-        int R = (1023.0 / temperature - 1.0) * R0;
-        temperature = 1.0/(Math.log(R/R0)/B+1/298.15)-263.15;
+        double R = (1023.0 / (double) temperature - 1.0) * R0;
+        temperature = (int) (1.0/(Math.log(R/R0)/B+1/298.15)-263.15);
 
         pw.println("" + temperature);
         System.out.println("" + temperature);
