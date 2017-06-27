@@ -58,7 +58,7 @@ public class SSLSimpleServer extends Thread {
 
 
         if (message.equals("")) {
-          pw.println(message);
+          pw.print(message);
         }
         else {
           if (message.equals("STOP")) {
@@ -74,17 +74,12 @@ public class SSLSimpleServer extends Thread {
             sleepTime = Integer.parseInt(message.substring(message.length() - 1))*1000;
           }
           messages.add(message);
-          pw.println(message);
+          pw.print(message);
         }
         pw.flush();
 
 
       }
-
-
-
-
-
       sock.close();
 
 
@@ -102,7 +97,7 @@ public class SSLSimpleServer extends Thread {
       }
 
 
-
+    System.out.println("got here now what???");
 
 
     } catch (IOException ioe) {
