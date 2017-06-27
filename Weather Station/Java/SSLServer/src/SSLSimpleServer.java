@@ -29,7 +29,7 @@ public class SSLSimpleServer extends Thread {
   public void run() {
     boolean receiving = true, running = true;
     ArrayList<String> messages = new ArrayList<>();
-    int sleepTime = 3000;
+    int sleepTime = 1000;
     try {
       while (running) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
@@ -51,7 +51,7 @@ public class SSLSimpleServer extends Thread {
         long end=System.currentTimeMillis()+1500;
         String message = "";
         while((System.currentTimeMillis()<end)) {
-          if (bufferedReader.available() > 0)
+          if (msgTaker.ready())
             message += msgTaker.readLine();
         }
         System.out.println("The message is " + message);
@@ -80,11 +80,6 @@ public class SSLSimpleServer extends Thread {
 
 
       }
-
-
-
-
-
       sock.close();
 
 
@@ -102,7 +97,7 @@ public class SSLSimpleServer extends Thread {
       }
 
 
-
+    System.out.println("got here now what???");
 
 
     } catch (IOException ioe) {
