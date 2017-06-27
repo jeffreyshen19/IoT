@@ -51,7 +51,7 @@ public class SSLSimpleServer extends Thread {
         long end=System.currentTimeMillis()+1500;
         String message = "";
         while((System.currentTimeMillis()<end)) {
-          if (bufferedReader.available() > 0)
+          if (msgTaker.ready())
             message += msgTaker.readLine();
         }
         System.out.println("The message is " + message);
@@ -77,8 +77,20 @@ public class SSLSimpleServer extends Thread {
           pw.println(message);
         }
         pw.flush();
+
+
       }
+
+
+
+
+
       sock.close();
+
+
+
+
+
       try{
         PrintWriter writer = new PrintWriter("log.txt", "UTF-8");
         for (int i = 0; i < messages.size(); i++){
@@ -88,6 +100,11 @@ public class SSLSimpleServer extends Thread {
       } catch (IOException e) {
         // do something
       }
+
+
+
+
+
     } catch (IOException ioe) {
       // Client disconnected
     }
