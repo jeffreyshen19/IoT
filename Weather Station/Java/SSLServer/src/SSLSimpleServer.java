@@ -40,7 +40,7 @@ public class SSLSimpleServer extends Thread {
           System.out.println(data + " is echoed");
         }
 
-        BufferedReader msgTaker = new BufferedReader(System.in);
+        BufferedReader msgTaker = new BufferedReader(new InputStreamReader(System.in));
 
         try {
           Thread.sleep(sleepTime);
@@ -49,7 +49,7 @@ public class SSLSimpleServer extends Thread {
         }
         String message = msgTaker.readLine();
         if (message.equals("")) {
-          pw.println(data);
+          pw.println(message);
         }
         else {
           if (message.equals("STOP")) {
