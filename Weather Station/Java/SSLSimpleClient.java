@@ -53,7 +53,7 @@ public class SSLSimpleClient {
       int temperature;
       double R;
 
-      Calendar cal = Calendar.getInstance();
+      Calendar cal;
       SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
       String formattedString = "", serverResponse = "";
 
@@ -64,6 +64,7 @@ public class SSLSimpleClient {
 
       while(true){
         if(running){
+          cal = Calendar.getInstance();
           temperature = (int) thermometer.read();
           R = (1023.0 / (double) temperature - 1.0) * R0;
           temperature = (int) (1.0/(Math.log(R/R0)/B+1/298.15)-273.15);
@@ -99,7 +100,7 @@ public class SSLSimpleClient {
           running = false;
         }
 
-        System.out.println(serverResponse);
+        if(serverResponse.length() > 0) System.out.println(serverResponse);
 
         Thread.sleep(period);
       }
