@@ -58,6 +58,7 @@ public class SSLSimpleClient {
         Thread.sleep(1000);
       }
 
+      sslSocket.close();
 
     } catch (Exception e) {
       e.printStackTrace();
