@@ -1,4 +1,12 @@
 import mraa.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.UnknownHostException;
+import javax.net.ssl.SSLSocket;
 
 public class Alarm {
 
@@ -24,19 +32,45 @@ public class Alarm {
   }
 
   public static void main(String[] args) {
-    
+
+    SSLSocket sslSocket = null;
+    SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
+    if(mSSLClientSocket.checkAndAddCertificates()) {
+      sslSocket = mSSLClientSocket.getSSLSocket();
+    }
+    else {
+      return;
+    }
+
     try {
 
       Aio mic = new Aio(0);
       int soundLevel, soundThreshold = 300;
 
+      String formattedString = "";
+      Calendar cal;
+      SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+      BufferedReader br = new BufferedReader(new InputStreamReader(sslSocket.getInputStream()));
+      PrintWriter pw = new PrintWriter(sslSocket.getOutputStream());
+      pw.println("Initiating connection from the client");
+      System.out.println("\033[1m\033[32mSuccessfully connected to secure server\033[0m");
+      pw.flush();
+      br.readLine();
+
       while(true){
         soundLevel = (int) mic.read();
-        
-	//Turn alarm on
+
+        //Turn alarm on
         if(soundLevel > soundThreshold){
+          cal = Calendar.getInstance();
+          formattedString = "" + sdf.format(cal.getTime()) + " " + soundLevel;
           setAlarm(1);
-          Thread.sleep(3000);
+          pw.println(formattedString);
+          System.out.println("\033[1m\033[31mBREAK-IN DETECTED. SENDING TO SERVER\033[0m");
+          System.out.println(formattedString);
+          pw.flush();
+          br.readLine();
           setAlarm(0);
         }
 
