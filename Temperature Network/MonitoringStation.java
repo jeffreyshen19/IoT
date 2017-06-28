@@ -75,7 +75,7 @@ public class MonitoringStation {
           formattedString = "" + sdf.format(cal.getTime()) + " " + temperature;
 
           lcd.setCursor(0,0);
-          lcd.write("" + sdf.format(cal.getTime()) + " " + temperature + "\u00B0" + (fahrenheit ? "F" : "C"));
+          lcd.write("" + sdf.format(cal.getTime()) + " " + temperature + (fahrenheit ? "F" : "C"));
           lcd.setCursor(1, 0);
           lcd.write("Running");
 
