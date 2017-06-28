@@ -72,9 +72,11 @@ public class Alarm {
           System.out.println("\033[1m\033[31mBREAK-IN DETECTED. SENDING TO SERVER\033[0m");
           System.out.println(formattedString);
           pw.flush();
+          Thread.sleep(2500);
         }
         else{
           pw.println("Alarm off");
+          System.out.println(soundLevel);
           pw.flush();
         }
 
