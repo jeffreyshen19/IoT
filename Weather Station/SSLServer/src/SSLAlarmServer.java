@@ -48,7 +48,7 @@ public class SSLAlarmServer extends Thread {
           System.out.println("couldnt sleep");
         }
 
-        long end=System.currentTimeMillis()+1500;
+        long end=System.currentTimeMillis()+1000;
         String message = "";
         while((System.currentTimeMillis()<end)) {
           if (msgTaker.ready())
