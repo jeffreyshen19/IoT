@@ -29,7 +29,7 @@ public class SSLAlarmServer extends Thread {
   public void run() {
     boolean receiving = true, running = true;
     ArrayList<String> messages = new ArrayList<>();
-    int sleepTime = 1000;
+    int sleepTime = 100;
     try {
       while (running) {
         BufferedReader br = new BufferedReader(new InputStreamReader(sock.getInputStream()));
