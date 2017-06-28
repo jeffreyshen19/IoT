@@ -23,14 +23,14 @@ public class MonitoringStation{
 
   public static void main(String[] args) {
 
-    SSLSocket sslSocket = null;
+    /*SSLSocket sslSocket = null;
     SSLClientSocket mSSLClientSocket = new SSLClientSocket(args[0], Integer.parseInt(args[1]));
     if(mSSLClientSocket.checkAndAddCertificates()) {
       sslSocket = mSSLClientSocket.getSSLSocket();
     }
     else {
       return;
-    }
+    }*/
 
     try {
 
