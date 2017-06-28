@@ -60,28 +60,12 @@ public class SSLAlarmServer extends Thread {
         else {
           System.out.println("The message is " + message);
         }
-        if (message.equals("")) {
-          pw.println(message);
+        if (!message.equals("")) {
+          messages.add(message);       
         }
-        else {
-          if (message.equals("STOP")) {
-            receiving = false;
-          }
-          else if (message.equals("OFF")) {
-            running = false;
-          }
-          else if (message.equals("START")) {
-            receiving = true;
-          }
-          else if (message.contains("PERIOD=")) {
-            sleepTime = Integer.parseInt(message.substring(message.indexOf("=") + 1))*1000;
-          }
-          messages.add(message);
-          pw.println(message);
-        }
+        pw.println(message);
         pw.flush();
       }
-
       sock.close();
 
       try{
