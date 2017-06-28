@@ -14,7 +14,7 @@ import javax.net.ssl.SSLSocket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MonitoringStation {
+public class SSLSimpleClient {
 
   static {
     try {
@@ -56,7 +56,6 @@ public class MonitoringStation {
       Calendar cal;
       SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
       String formattedString = "", serverResponse = "";
-      upm_jhd1313m1.Jhd1313m1 lcd = new upm_jhd1313m1.Jhd1313m1(1, 0x3E, 0x62);
 
       //Configuration variables
       boolean fahrenheit = true;
@@ -66,16 +65,12 @@ public class MonitoringStation {
       while(true){
         if(running){
           cal = Calendar.getInstance();
-          lcd.clear();
           temperature = (int) thermometer.read();
           R = (1023.0 / (double) temperature - 1.0) * R0;
           temperature = (int) (1.0/(Math.log(R/R0)/B+1/298.15)-273.15);
           if(fahrenheit) temperature = 9 * temperature / 5 + 32;
 
           formattedString = "" + sdf.format(cal.getTime()) + " " + temperature;
-
-          lcd.setCursor(0,0);
-          lcd.write("" + temperature + "˚" + (fahrenheit ? "F" : "C"));
 
           pw.println(formattedString);
           System.out.println(formattedString);
