@@ -47,7 +47,7 @@ public class Alarm {
       Aio mic = new Aio(0);
       int soundLevel, soundThreshold = 300;
 
-      String formattedString = "";
+      String formattedString = "", serverResponse = "";
       Calendar cal;
       SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
@@ -58,11 +58,13 @@ public class Alarm {
       pw.flush();
       br.readLine();
 
+      boolean alarmEngaged = true;
+
       while(true){
         soundLevel = (int) mic.read();
 
         //Turn alarm on
-        if(soundLevel > soundThreshold){
+        if(soundLevel > soundThreshold && alarmEngaged){
           cal = Calendar.getInstance();
           formattedString = "" + sdf.format(cal.getTime()) + " " + soundLevel;
           setAlarm(1);
@@ -70,8 +72,24 @@ public class Alarm {
           System.out.println("\033[1m\033[31mBREAK-IN DETECTED. SENDING TO SERVER\033[0m");
           System.out.println(formattedString);
           pw.flush();
-          br.readLine();
-          setAlarm(0);
+        }
+        else{
+          pw.println("Alarm off");
+          pw.flush();
+        }
+
+        serverResponse = br.readLine().trim();
+        setAlarm(0);
+
+        if(serverResponse.length() > 0) System.out.println(serverResponse);
+
+        if(serverResponse.equals("OFF")){
+          if(alarmEngaged) System.out.println("\033[1m\033[31mDisabling alarm.\033[0m");
+          alarmEngaged = false;
+        }
+        else if(serverResponse.equals("ON")){
+          if(!alarmEngaged) System.out.println("\033[1m\033[32mTurning on the alarm.\033[0m");
+          alarmEngaged = true;
         }
 
         Thread.sleep(100);
