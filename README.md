@@ -5,6 +5,7 @@ Codebase storing projects written for the Intel Edison platform as part of an ex
 ## Built With
 
 * [Mraa](https://iotdk.intel.com/docs/master/mraa/)
+* [UPM](https://github.com/intel-iot-devkit/upm)
 * [OpenSSL](https://www.openssl.org)
 
 ## Authors
