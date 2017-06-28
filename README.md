@@ -10,7 +10,7 @@ Each project is stored in an individual folder:
 * **Archive**: Old code that doesn't work but is there for reference.
 * **Chat**: A chat client that enables 3 Intel edisons to communicate: 2 clients and one server.
 * **Light Sensor**: Entering a password to a server using SSL and a light sensor.
-* **Temperature Network**: A network of Intel Edisons monitoring temperature data and transmitting that to a central server.
+* **Temperature Network**: A network of Intel Edisons monitoring temperature data and transmitting that to a central server. Each individual Edison also displays some data over an LCD screen
 * **Weather Station**: One Intel Edison sending weather information to another one, communicating over SSL
 
 ## Built With
