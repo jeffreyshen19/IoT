@@ -32,8 +32,8 @@ public class Alarm {
 
       while(true){
         soundLevel = (int) mic.read();
-        
-	//Turn alarm on
+        System.out.println("" + soundLevel);
+        //Turn alarm on
         if(soundLevel > soundThreshold){
           setAlarm(1);
           Thread.sleep(3000);
