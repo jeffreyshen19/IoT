@@ -13,11 +13,10 @@ public class SSLTempMonitor extends Thread {
   public static void main(String[] args) throws Exception {
     ServerSocketFactory ssf = SSLServerSocketFactory.getDefault();
     ServerSocket ss = ssf.createServerSocket(Integer.parseInt(args[0]));
-    ServerSocket ss1 = ssf.createServerSocket(Integer.parseInt(args[1])); //SECOND COMPILER FLAG
-    filename = args[2];
+    filename = args[1];
     System.out.println("Ready for both...");
     while (true) {
-      new SSLTempMonitor(ss.accept(), ss1.accept()).start();
+      new SSLTempMonitor(ss.accept(), ss.accept()).start();
     }
   }
 
